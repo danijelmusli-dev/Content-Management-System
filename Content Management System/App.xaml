@@ -4,6 +4,11 @@
              xmlns:local="clr-namespace:Content_Management_System"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-         
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Styles/BaseColorsDarkTheme.xaml"/>
+                <ResourceDictionary Source="/Styles/DarkThemeStyle.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
     </Application.Resources>
 </Application>

@@ -13,6 +13,8 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
+using Content_Management_System.Models;
+
 namespace Content_Management_System
 {
     /// <summary>
@@ -20,9 +22,27 @@ namespace Content_Management_System
     /// </summary>
     public partial class MainWindow : Window
     {
+
+        public User CurrentUser { get; set; }
+
         public MainWindow()
         {
             InitializeComponent();
+
+            this.Visibility = Visibility.Hidden;
+
+            var loginWindow = new View.Login();
+            bool? someoneLogged = loginWindow.ShowDialog();
+
+            if (someoneLogged == true) 
+            {
+                this.CurrentUser = loginWindow.User;
+            }
+
         }
+
+
+
+
     }
 }
