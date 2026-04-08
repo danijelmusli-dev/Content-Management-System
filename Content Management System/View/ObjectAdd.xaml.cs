@@ -3,11 +3,11 @@
 namespace Content_Management_System.View
 {
     /// <summary>
-    /// Interaction logic for ObjectReview.xaml
+    /// Interaction logic for ObjectAdd.xaml
     /// </summary>
-    public partial class ObjectReview : Window
+    public partial class ObjectAdd : Window
     {
-        public ObjectReview()
+        public ObjectAdd()
         {
             InitializeComponent();
         }
