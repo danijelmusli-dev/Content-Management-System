@@ -5,11 +5,65 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Content_Management_System"
         xmlns:view="clr-namespace:Content_Management_System.View"
-        xmlns:UserControl="clr-namespace:Content_Management_System.UserControls"
+        xmlns:uc="clr-namespace:Content_Management_System.UserControls" 
+        xmlns:fa5="http://schemas.fontawesome.com/icons/"
         mc:Ignorable="d"
+        
         WindowStartupLocation="CenterScreen"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
+        WindowStyle="None"
+        
+        Closing="Window_Closing"
+        
+        Title="MainWindow" Height="750" Width="1000">
+    <Border x:Name="GridBorder" Style="{StaticResource BorderedGridStyle}">
+        <Grid Style="{DynamicResource GridStyle}">
 
-    </Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="6*"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="1*"/>
+            </Grid.RowDefinitions>
+
+            <uc:WindowHeader Grid.Row="0" Grid.ColumnSpan="2" MinimizedButton="True" MaximizedButton="True" CloseButton="True"/>
+
+            <StackPanel x:Name="HeaderStackPanel" Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+                <fa5:SvgAwesome Icon="Solid_Film" Foreground="{DynamicResource Secondary0Color}" Width="48" Height="48" Margin="0 0 8 0"/>
+                <TextBlock x:Name="HeaderTextTbl" Grid.Row="1" Style="{DynamicResource HeaderTextBlockStyle}" Text="Movie Reviews"/>
+            </StackPanel>
+
+            <ScrollViewer x:Name="MovieScrollViewer" Style="{DynamicResource ScrollViewerStyle}" Grid.Row="2" HorizontalScrollBarVisibility="Visible" VerticalScrollBarVisibility="Disabled" HorizontalContentAlignment="Left" Margin="10 10 10 10" Padding="2">
+                <ItemsControl x:Name="MovieReviewItemsControl" ItemsSource="{Binding Reviews}">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <StackPanel x:Name="MovieReviewStackPanel" Orientation="Horizontal"/>
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <uc:ReviewItem />
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+
+                </ItemsControl>
+            </ScrollViewer>
+
+            <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Center">
+                <Button x:Name="AddReviewBtn" Style="{DynamicResource TableButtonStyle}" Click="AddReviewBtn_Click" Content="Add Review" Width="100" Height="30" HorizontalAlignment="Right" FontSize="15" Margin="10 0 0 0"/>
+                <Button x:Name="DeleteReviewBtn" Style="{DynamicResource TableButtonStyle}" Click="DeleteReviewBtn_Click" Content="Delete Review" Width="100" Height="30" HorizontalAlignment="Right" FontSize="15" Margin="10 0 0 0"/>
+                <Button x:Name="EditReviewBtn" Style="{DynamicResource TableButtonStyle}" Click="EditReviewBtn_Click" Content="Edit Review" Width="100" Height="30" HorizontalAlignment="Right" FontSize="15" Visibility="Visible" Margin="10 0 0 0"/>
+            </StackPanel>
+
+            
+            
+            <CheckBox x:Name="CheckAllCb" Grid.Row="3" Checked="CheckAllCb_Checked" Unchecked="CheckAllCb_Checked" Style="{DynamicResource CheckBoxStyle}" Content="Select All" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" HorizontalAlignment="Right" Margin="0 0 20 0">
+                <CheckBox.LayoutTransform>
+                    <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
+                </CheckBox.LayoutTransform>
+            </CheckBox>
+
+        </Grid>
+    </Border>
 </Window>

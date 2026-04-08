@@ -5,10 +5,13 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Content_Management_System.View"
         xmlns:UserControl="clr-namespace:Content_Management_System.UserControls"
+        xmlns:fa5="http://schemas.fontawesome.com/icons/"
         mc:Ignorable="d"
+        
         ResizeMode="NoResize"
         WindowStartupLocation="CenterScreen"
         WindowStyle="None"
+        
         Title="Login" Height="500" Width="400"
         Closed="Window_Closed">
     <Border x:Name="GridBorder" Style="{StaticResource BorderedGridStyle}">
@@ -24,7 +27,8 @@
 
         <UserControl:WindowHeader MaximizedButton="False"/>
 
-        <Image x:Name="UserImageIMG" Grid.Row="1" Source="/Media/Blank1.png" VerticalAlignment="Center" Width="300" Height="200" />
+        <!--<Image x:Name="UserImageIMG" Grid.Row="1" Source="/Media/UserImages/Blank1.png" VerticalAlignment="Center" Width="300" Height="200" />-->
+        <fa5:SvgAwesome Grid.Row="1" Icon="Regular_UserCircle" Foreground="{DynamicResource Primary2Color}" Width="196" Height="196"/>
 
         <StackPanel Grid.Row="2" Orientation="Vertical" Margin="10">
             <Label x:Name="UserNameLB" Style="{DynamicResource LabelStyle}" Width="310" Content="Username" FontSize="18"/>

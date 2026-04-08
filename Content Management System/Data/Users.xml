@@ -6,7 +6,7 @@
 		<Role>Admin</Role>
 	</User>
 	<User>
-		<Name>regular</Name>
+		<Name>user</Name>
 		<Password>123</Password>
 		<Role>Visitor</Role>
 	</User>

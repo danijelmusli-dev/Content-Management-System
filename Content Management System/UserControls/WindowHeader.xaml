@@ -8,7 +8,6 @@
              d:DesignHeight="30" d:DesignWidth="30"
              Width="Auto" Height="Auto">
     <Grid>
-
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0">
             <Button x:Name="WindowMinimizeBtn" Style="{DynamicResource WindowButtonStyle}" Click="WindowMinimizeBtn_Click" Width="40" Height="30" FontFamily="Segoe MDL2 Assets" FontSize="12">
                 <TextBlock Text="&#xE921;"/>
