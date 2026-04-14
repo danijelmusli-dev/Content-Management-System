@@ -10,7 +10,7 @@ namespace Content_Management_System.Models
         private string _movieName;
         private string _link;
         private float _rating;
-        private string _description;
+        private string _descriptionPath;
         private DateTime _objectCreationTime;
         private bool _isSelected;
 
@@ -66,15 +66,15 @@ namespace Content_Management_System.Models
             }
         }
 
-        public string Description
+        public string DescriptionPath
         {
-            get => _description;
+            get => _descriptionPath;
             set
             {
-                if (_description != value)
+                if (_descriptionPath != value)
                 {
-                    _description = value;
-                    OnPropertyChanged(nameof(Description));
+                    _descriptionPath = value;
+                    OnPropertyChanged(nameof(DescriptionPath));
                 }
             }
         }
@@ -114,7 +114,7 @@ namespace Content_Management_System.Models
             _rating = rating;
             _movieName = movieName;
             _link = link;
-            _description = description;
+            _descriptionPath = description;
             _imagePath = imagePath;
             _objectCreationTime = objectCreationTime;
         }

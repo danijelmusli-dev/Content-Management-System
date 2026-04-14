@@ -111,7 +111,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Styles\DarkThemeStyle.xaml">
+    <Page Include="Styles\ControlStyles.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -154,6 +154,11 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="Data\ObjectData\RtfFiles\Object1.rtf" />
+    <None Include="Data\ObjectData\RtfFiles\Object2.rtf" />
+    <None Include="Data\ObjectData\RtfFiles\Object3.rtf" />
+    <None Include="Data\ObjectData\RtfFiles\Object4.rtf" />
+    <None Include="Data\ObjectData\RtfFiles\Object5.rtf" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -164,13 +169,13 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Data\Objects.xml" />
+    <Resource Include="Data\ObjectData\XmlFiles\Objects.xml" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Media\UserImages\Blank1.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Data\Users.xml" />
+    <Resource Include="Data\UserData\UserXml\Users.xml" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.7.2">
@@ -185,6 +190,7 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Data\UserData\UserImages\" />
     <Folder Include="Media\Icons\" />
   </ItemGroup>
   <ItemGroup>

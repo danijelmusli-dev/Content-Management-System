@@ -10,6 +10,7 @@
     <Brush x:Key="Secondary2Color">#FAA18F</Brush>
 
     <Brush x:Key="StarColor">#F7AE0F</Brush>
+    <Brush x:Key="StarHoverColor">#FFCF4A</Brush>
 
     <Color x:Key="GradientStartColor">#242424</Color>
     <Color x:Key="GradientEndColor">#F54927</Color>
@@ -17,5 +18,7 @@
     <SolidColorBrush x:Key="TextColorBrush" Color="White"/>
     <SolidColorBrush x:Key="TextMediumColorBrush" Color="#CCCCCC"/>
     <SolidColorBrush x:Key="TextLightColorBrush" Color="#B3B3B3"/>
+
+    <SolidColorBrush x:Key="TextErrorColorBrush" Color="#FA3939"/>
 
 </ResourceDictionary>

@@ -24,16 +24,15 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="6*"/>
             <RowDefinition Height="1*"/>
-            <RowDefinition Height="1*"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="1.5*"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <Image x:Name="MoviePosterIMG" Grid.Row="0" Source="{Binding ImagePath, Mode=TwoWay}" Stretch="Fill" VerticalAlignment="Center" HorizontalAlignment="Center" Width="Auto" Height="Auto"/>
+        <Image x:Name="MoviePosterIMG" Grid.Row="0" Source="{Binding ImagePath}" Stretch="Fill" VerticalAlignment="Center" HorizontalAlignment="Center" Width="Auto" Height="Auto"/>
 
         <TextBlock x:Name="MovieNameTbl" Style="{DynamicResource TextBlockStyle}" Grid.Row="1" TextAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="18" FontWeight="Bold">
-            <Hyperlink x:Name="MovieLink" Style="{DynamicResource HyperlinkStyle}" NavigateUri="{Binding Link}"
-                       RequestNavigate="Hyperlink_RequestNavigate">
+            <Hyperlink x:Name="MovieLink" Style="{DynamicResource HyperlinkStyle}" NavigateUri="{Binding Link}" RequestNavigate="Hyperlink_RequestNavigate">
                 <Run Text="{Binding MovieName}" />
             </Hyperlink>
         </TextBlock>
@@ -41,20 +40,29 @@
 
         <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
             <StackPanel x:Name="StarsPanel" Orientation="Horizontal" HorizontalAlignment="Center">
-                <fa5:SvgAwesome Icon="Regular_Star" Foreground="{DynamicResource StarColor}" Width="24" Height="24" Margin="0 0 3 0"/>
-                <fa5:SvgAwesome Icon="Regular_Star" Foreground="{DynamicResource StarColor}" Width="24" Height="24" Margin="0 0 3 0"/>
-                <fa5:SvgAwesome Icon="Regular_Star" Foreground="{DynamicResource StarColor}" Width="24" Height="24" Margin="0 0 3 0"/>
-                <fa5:SvgAwesome Icon="Regular_Star" Foreground="{DynamicResource StarColor}" Width="24" Height="24" Margin="0 0 3 0"/>
-                <fa5:SvgAwesome Icon="Regular_Star" Foreground="{DynamicResource StarColor}" Width="24" Height="24" Margin="0 0 3 0"/>
+                <fa5:SvgAwesome Icon="Regular_Star" Foreground="{DynamicResource StarColor}" Width="28" Height="28" Margin="0 0 3 0"/>
+                <fa5:SvgAwesome Icon="Regular_Star" Foreground="{DynamicResource StarColor}" Width="28" Height="28" Margin="0 0 3 0"/>
+                <fa5:SvgAwesome Icon="Regular_Star" Foreground="{DynamicResource StarColor}" Width="28" Height="28" Margin="0 0 3 0"/>
+                <fa5:SvgAwesome Icon="Regular_Star" Foreground="{DynamicResource StarColor}" Width="28" Height="28" Margin="0 0 3 0"/>
+                <fa5:SvgAwesome Icon="Regular_Star" Foreground="{DynamicResource StarColor}" Width="28" Height="28" Margin="0 0 3 0"/>
             </StackPanel>
         </StackPanel>
 
-        <TextBlock x:Name="ReviewDescriptionTbl" Style="{DynamicResource TextBlockStyle}" Grid.Row="3" TextAlignment="Left" FontStyle="Italic" Text="{Binding Description, Mode=TwoWay}" TextWrapping="Wrap" Margin="10"/>
+        <RichTextBox x:Name="ReviewDescriptionRtb" Style="{DynamicResource RichTextBoxStyle}" Loaded="ReviewDescriptionRtb_Loaded" IsReadOnly="True" BorderBrush="Transparent" Background="Transparent" Grid.Row="3" HorizontalContentAlignment="Left" Margin="10"/>
         <CheckBox x:Name="ReviewCheckBox" Style="{DynamicResource CheckBoxStyle}" Grid.Row="4" IsChecked="{Binding IsSelected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5">
             <CheckBox.LayoutTransform>
                 <ScaleTransform ScaleX="1.8" ScaleY="1.8"/>
             </CheckBox.LayoutTransform>
         </CheckBox>
+
+        <StackPanel Grid.Row="4" Orientation="Horizontal">
+            <Button x:Name="ViewReviewBtn" Style="{DynamicResource ReviewControlButtonStyle}" Click="ViewReviewBtn_Click" HorizontalAlignment="Left" VerticalAlignment="Center" Width="32" Height="32" Margin="5 0 0 0">
+                <fa5:SvgAwesome Icon="Regular_Eye" Foreground="{Binding Foreground, RelativeSource={RelativeSource AncestorType=Button}}"></fa5:SvgAwesome>
+            </Button>
+            <Button x:Name="EditReviewBtn" Style="{DynamicResource ReviewControlButtonStyle}" Click="EditReviewBtn_Click" HorizontalAlignment="Left" VerticalAlignment="Center" IsEnabled="{Binding EditButtonEnabled, RelativeSource={RelativeSource AncestorType=UserControl}}" Width="32" Height="32" Margin="5 0 0 0">
+                <fa5:SvgAwesome Icon="Regular_Edit" Foreground="{Binding Foreground, RelativeSource={RelativeSource AncestorType=Button}}"></fa5:SvgAwesome>
+            </Button>
+        </StackPanel>
 
         <TextBlock x:Name="CreationTimeTB" Grid.Row="4" Style="{DynamicResource TextBlockStyle}" Foreground="{DynamicResource TextLightColorBrush}" Text="{Binding ObjectCreationTime, StringFormat='{}{0:dd.MM.yy}'}" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0 0 10 5"/>
 
