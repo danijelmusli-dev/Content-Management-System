@@ -14,7 +14,7 @@
         
         Closing="Window_Closing"
         
-        Title="MainWindow" Height="750" Width="1000">
+        Title="MainWindow" Height="850" Width="1300">
     <Border x:Name="GridBorder" Style="{StaticResource BorderedGridStyle}">
         <Grid Style="{DynamicResource GridStyle}">
 
@@ -43,7 +43,7 @@
 
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
-                            <uc:ReviewItem />
+                            <uc:ReviewItem EditButtonEnabled="{Binding DataContext.IsAdminLogged, RelativeSource={RelativeSource AncestorType=Window}}"/>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
 
@@ -53,7 +53,6 @@
             <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Center">
                 <Button x:Name="AddReviewBtn" Style="{DynamicResource TableButtonStyle}" Click="AddReviewBtn_Click" Content="Add Review" Width="100" Height="30" HorizontalAlignment="Right" FontSize="15" Margin="10 0 0 0"/>
                 <Button x:Name="DeleteReviewBtn" Style="{DynamicResource TableButtonStyle}" Click="DeleteReviewBtn_Click" Content="Delete Review" Width="100" Height="30" HorizontalAlignment="Right" FontSize="15" Margin="10 0 0 0"/>
-                <Button x:Name="EditReviewBtn" Style="{DynamicResource TableButtonStyle}" Click="EditReviewBtn_Click" Content="Edit Review" Width="100" Height="30" HorizontalAlignment="Right" FontSize="15" Visibility="Visible" Margin="10 0 0 0"/>
             </StackPanel>
 
             

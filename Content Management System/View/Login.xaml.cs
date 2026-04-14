@@ -19,6 +19,8 @@ namespace Content_Management_System.View
         {
             InitializeComponent();
             this.users = LoadUsers();
+
+            this.UserNameTB.Focus();
         }
 
         private void Window_Closed(object sender, EventArgs e)
@@ -29,7 +31,7 @@ namespace Content_Management_System.View
 
         private List<User> LoadUsers()
         {
-            string path = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\..\Data", "Users.xml");
+            string path = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\..\Data\UserData\UserXml", "Users.xml");
             path = System.IO.Path.GetFullPath(path);
 
             XDocument document = XDocument.Load(path);
@@ -58,12 +60,37 @@ namespace Content_Management_System.View
             {
 
                 this.User = users.Find(user => user.Name == username);
-                DialogResult = true;
+                this.DialogResult = true;
 
                 this.Close();
                 Application.Current.MainWindow.Visibility = Visibility.Visible;
             }
 
+        }
+
+        private void UserNameTB_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
+        {
+            if (e.Key == System.Windows.Input.Key.Enter)
+            {
+                this.PasswordTB.Focus();
+            }
+        }
+
+        private void PasswordTB_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
+        {
+            if (e.Key == System.Windows.Input.Key.Enter)
+            {
+                this.LoginBtn.Focus();
+                this.LoginBtn_Click(sender, e);
+            }
+        }
+
+        private void LoginBtn_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
+        {
+            if (e.Key == System.Windows.Input.Key.Escape)
+            {
+                this.PasswordTB.Focus();
+            }
         }
     }
 }

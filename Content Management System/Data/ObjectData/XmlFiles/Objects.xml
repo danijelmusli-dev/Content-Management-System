@@ -1,0 +1,51 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Reviews>
+  <Review>
+    <MovieName>asdasda</MovieName>
+    <Rating>2.5</Rating>
+    <Link>asdasdadasd</Link>
+    <DescriptionPath>C:\Users\Danijel Musli\Desktop\INDIVIDUAL PROJECTS\Content Management System\Content Management System\Data\ObjectData\RtfFiles\asdasda.rtf</DescriptionPath>
+    <ImagePath>C:\Users\Danijel Musli\Pictures\Screenshots\Screenshot 2026-01-08 003940.png</ImagePath>
+    <ObjectCreationTime>2026-04-14T20:48:09.5592715+02:00</ObjectCreationTime>
+  </Review>
+  <Review>
+    <MovieName>The Shawshank Redemption</MovieName>
+    <Rating>4.5</Rating>
+    <Link>https://en.wikipedia.org/wiki/The_Shawshank_Redemption</Link>
+    <DescriptionPath>Object1.rtf</DescriptionPath>
+    <ImagePath>/Media/MovieImages/pic1.jpg</ImagePath>
+    <ObjectCreationTime>2026-04-14T20:47:58.8775265+02:00</ObjectCreationTime>
+  </Review>
+  <Review>
+    <MovieName>The Godfather</MovieName>
+    <Rating>5</Rating>
+    <Link>https://en.wikipedia.org/wiki/The_Godfather</Link>
+    <DescriptionPath>Object2.rtf</DescriptionPath>
+    <ImagePath>/Media/MovieImages/pic2.jpg</ImagePath>
+    <ObjectCreationTime>2026-04-14T20:47:58.8775265+02:00</ObjectCreationTime>
+  </Review>
+  <Review>
+    <MovieName>The Dark Knight</MovieName>
+    <Rating>2.5</Rating>
+    <Link>https://en.wikipedia.org/wiki/The_Dark_Knight_(film)</Link>
+    <DescriptionPath>Object3.rtf</DescriptionPath>
+    <ImagePath>/Media/MovieImages/pic3.jpg</ImagePath>
+    <ObjectCreationTime>2026-04-14T20:47:58.8775265+02:00</ObjectCreationTime>
+  </Review>
+  <Review>
+    <MovieName>Inception</MovieName>
+    <Rating>4</Rating>
+    <Link>https://en.wikipedia.org/wiki/Inception</Link>
+    <DescriptionPath>Object4.rtf</DescriptionPath>
+    <ImagePath>/Media/MovieImages/pic4.jpg</ImagePath>
+    <ObjectCreationTime>2026-04-14T20:47:58.8775265+02:00</ObjectCreationTime>
+  </Review>
+  <Review>
+    <MovieName>Pulp Fiction</MovieName>
+    <Rating>3.5</Rating>
+    <Link>https://en.wikipedia.org/wiki/Pulp_Fiction</Link>
+    <DescriptionPath>Object5.rtf</DescriptionPath>
+    <ImagePath>/Media/MovieImages/pic5.jpg</ImagePath>
+    <ObjectCreationTime>2026-04-14T20:47:58.8775265+02:00</ObjectCreationTime>
+  </Review>
+</Reviews>

@@ -2,8 +2,10 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
 using System.Windows;
+using System.Windows.Documents;
 using System.Xml.Linq;
 
 namespace Content_Management_System
@@ -16,6 +18,8 @@ namespace Content_Management_System
 
         public User CurrentUser { get; set; }
         public User AddedUser { get; set; }
+        public Review AddedReview { get; set; }
+        public bool IsAdminLogged { get; set; }
 
         int ItemsCountStart = 0;
         int ItemsCountEnd = 0;
@@ -38,13 +42,14 @@ namespace Content_Management_System
             if (someoneLogged == true)
             {
                 this.CurrentUser = loginWindow.User;
+                this.IsAdminLogged = (this.CurrentUser.Role == UserRole.Role.Admin);
             }
 
         }
 
         public List<Review> LoadObjects()
         {
-            string path = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\..\Data", "Objects.xml");
+            string path = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\..\Data\ObjectData\XmlFiles", "Objects.xml");
             path = System.IO.Path.GetFullPath(path);
 
             XDocument document = XDocument.Load(path);
@@ -55,16 +60,17 @@ namespace Content_Management_System
                     MovieName = review.Element("MovieName")?.Value,
                     Rating = float.Parse(review.Element("Rating")?.Value ?? "0"),
                     Link = review.Element("Link")?.Value,
-                    Description = review.Element("Description")?.Value,
+                    DescriptionPath = review.Element("DescriptionPath")?.Value,
                     ImagePath = review.Element("ImagePath")?.Value,
                     ObjectCreationTime = DateTime.Now
                 }).ToList();
 
             return allObjects;
         }
+
         public void SaveObjects()
         {
-            string path = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\..\Data", "Objects.xml");
+            string path = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\..\Data\ObjectData\XmlFiles", "Objects.xml");
             path = System.IO.Path.GetFullPath(path);
             XDocument document = new XDocument(
                 new XElement("Reviews",
@@ -73,7 +79,7 @@ namespace Content_Management_System
                             new XElement("MovieName", review.MovieName),
                             new XElement("Rating", review.Rating),
                             new XElement("Link", review.Link),
-                            new XElement("Description", review.Description),
+                            new XElement("DescriptionPath", review.DescriptionPath),
                             new XElement("ImagePath", review.ImagePath),
                             new XElement("ObjectCreationTime", review.ObjectCreationTime.ToString("o")
                         )
@@ -90,7 +96,8 @@ namespace Content_Management_System
 
             if (result == true)
             { 
-                
+                AddedReview = addObjectWindow.NewReview;
+                this.Reviews.Insert(0, AddedReview);
             }
         
         }
@@ -101,6 +108,24 @@ namespace Content_Management_System
 
             foreach (Review review in selected)
             {
+                string relativePath = review.DescriptionPath;
+                string path = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\..\Data\ObjectData\RtfFiles", relativePath);
+                path = System.IO.Path.GetFullPath(path);
+
+                if (File.Exists(path))
+                {
+
+                    try 
+                    {
+                        File.Delete(path);
+                        MessageBox.Show("Uspesno obrisano");
+                    }
+                    catch(Exception re) 
+                    {
+                        MessageBox.Show(re.Message);
+                    }
+                }
+
                 Reviews.Remove(review);
             }
 
@@ -114,11 +139,6 @@ namespace Content_Management_System
             {
                 review.IsSelected = checkState;
             }
-
-        }
-
-        private void EditReviewBtn_Click(object sender, RoutedEventArgs e)
-        {
 
         }
 

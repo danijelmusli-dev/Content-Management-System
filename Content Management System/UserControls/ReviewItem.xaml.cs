@@ -1,8 +1,13 @@
-﻿using FontAwesome5;
+﻿using Content_Management_System.Models;
+using Content_Management_System.View;
+using FontAwesome5;
+using System;
 using System.ComponentModel;
+using System.Diagnostics;
+using System.IO;
 using System.Windows;
 using System.Windows.Controls;
-using System.Diagnostics;
+using System.Windows.Documents;
 using System.Windows.Navigation;
 
 namespace Content_Management_System.UserControls
@@ -12,6 +17,19 @@ namespace Content_Management_System.UserControls
     /// </summary>
     public partial class ReviewItem : UserControl
     {
+        public static readonly DependencyProperty EditButtonEnabledProperty =
+        DependencyProperty.Register(
+            nameof(EditButtonEnabled),          // ime property-ja
+            typeof(bool),                       // tip
+            typeof(ReviewItem),                 // vlasnik (klasa gde se registruje)
+            new PropertyMetadata(false));       // podrazumevana vrednost
+
+        // CLR wrapper
+        public bool EditButtonEnabled
+        {
+            get => (bool)GetValue(EditButtonEnabledProperty);
+            set => SetValue(EditButtonEnabledProperty, value);
+        }
 
         public ReviewItem()
         {
@@ -33,7 +51,6 @@ namespace Content_Management_System.UserControls
         {
             if (e.PropertyName == nameof(Models.Review.IsSelected))
             {
-                // Forsiraj refresh CheckBox-a
                 ReviewCheckBox.IsChecked = ((Models.Review)sender).IsSelected;
             }
         }
@@ -71,10 +88,46 @@ namespace Content_Management_System.UserControls
             try
             {
                 Process.Start(new ProcessStartInfo(e.Uri.AbsoluteUri) { UseShellExecute = true });
+                e.Handled = true;
             }
-            catch { }
-            e.Handled = true;
+            catch 
+            {
+                e.Handled = false;
+            }
         }
 
+        private void ReviewDescriptionRtb_Loaded(object sender, RoutedEventArgs e)
+        {
+
+            string relativePath = ((Review)this.DataContext).DescriptionPath;
+            string path = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\..\Data\ObjectData\RtfFiles", relativePath);
+            path = System.IO.Path.GetFullPath(path);
+
+            if (File.Exists(path))
+            {
+                TextRange range = new TextRange(
+                    ReviewDescriptionRtb.Document.ContentStart,
+                    ReviewDescriptionRtb.Document.ContentEnd);
+
+                using (FileStream fs = new FileStream(path, FileMode.Open))
+                {
+                    range.Load(fs, DataFormats.Rtf);
+                }
+            }
+        }
+
+        private void ViewReviewBtn_Click(object sender, RoutedEventArgs e)
+        {
+            if(this.DataContext is Review)
+            {
+                ObjectReview objectReviewWindow = new ObjectReview(this.DataContext as Review);
+                objectReviewWindow.ShowDialog();
+            }
+        }
+
+        private void EditReviewBtn_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

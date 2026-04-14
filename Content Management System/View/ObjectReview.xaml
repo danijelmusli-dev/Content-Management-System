@@ -3,10 +3,59 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:fa5="http://schemas.fontawesome.com/icons/"
+        xmlns:uc="clr-namespace:Content_Management_System.UserControls" 
         xmlns:local="clr-namespace:Content_Management_System.View"
         mc:Ignorable="d"
-        Title="ObjectReview" Height="450" Width="800">
-    <Grid>
         
-    </Grid>
+        WindowStyle="None"
+        WindowStartupLocation="CenterScreen"
+        
+        Title="ObjectReview" Height="850" Width="600">
+    <Border Style="{DynamicResource BorderedGridStyle}">
+        <Grid Style="{DynamicResource GridStyle}">
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="2.5*"/>
+                <RowDefinition Height="2*"/>
+                <RowDefinition Height="4*"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="1*"/>
+            </Grid.RowDefinitions>
+
+            <uc:WindowHeader Grid.Row="0" Grid.ColumnSpan="2" MinimizedButton="True" MaximizedButton="False" CloseButton="True"/>
+            
+            <Image x:Name="MoviePosterIMG" Grid.Row="1" Source="{Binding ImagePath}" Stretch="UniformToFill" VerticalAlignment="Center" HorizontalAlignment="Center" Width="300" Height="Auto" Margin="0 5 0 10"/>
+
+            <TextBlock x:Name="MovieNameTbl" Text="{Binding MovieName}" Style="{DynamicResource TextBlockStyle}" Grid.Row="2" TextAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="32" FontWeight="Bold" Margin="10"/>
+
+            <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+                <StackPanel x:Name="StarsPanel" Orientation="Horizontal" HorizontalAlignment="Center">
+                    <fa5:SvgAwesome Icon="Regular_Star" Foreground="{DynamicResource StarColor}" Width="48" Height="48" Margin="0 0 3 0"/>
+                    <fa5:SvgAwesome Icon="Regular_Star" Foreground="{DynamicResource StarColor}" Width="48" Height="48" Margin="0 0 3 0"/>
+                    <fa5:SvgAwesome Icon="Regular_Star" Foreground="{DynamicResource StarColor}" Width="48" Height="48" Margin="0 0 3 0"/>
+                    <fa5:SvgAwesome Icon="Regular_Star" Foreground="{DynamicResource StarColor}" Width="48" Height="48" Margin="0 0 3 0"/>
+                    <fa5:SvgAwesome Icon="Regular_Star" Foreground="{DynamicResource StarColor}" Width="48" Height="48" Margin="0 0 3 0"/>
+                </StackPanel>
+            </StackPanel>
+
+            <RichTextBox x:Name="ReviewDescriptionRtb" Style="{DynamicResource RichTextBoxStyle}" Grid.Row="4" Loaded="ReviewDescriptionRtb_Loaded" IsReadOnly="True" BorderBrush="Transparent" Background="Transparent" HorizontalAlignment="Center" HorizontalContentAlignment="Center" Margin="10"/>
+
+            <TextBlock x:Name="MovieLinkTbl" Style="{DynamicResource TextBlockStyle}" Grid.Row="5" TextAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="18" FontWeight="Bold" Margin="10">
+                <Hyperlink x:Name="MovieLink" Style="{DynamicResource HyperlinkStyle}" NavigateUri="{Binding Link}" Foreground="{DynamicResource Secondary0Color}" TextDecorations="Underline" 
+                           RequestNavigate="Hyperlink_RequestNavigate">
+                    <Run Text="{Binding Link}"/>
+                </Hyperlink>
+            </TextBlock>
+
+            <StackPanel Grid.Row="6" Orientation="Horizontal" HorizontalAlignment="Center">
+                <TextBlock Style="{DynamicResource TextBlockStyle}" FontSize="24">Creation Time: </TextBlock>
+                <TextBlock x:Name="CreationTimeTB" Style="{DynamicResource TextBlockStyle}" Foreground="{DynamicResource TextLightColorBrush}" Text="{Binding ObjectCreationTime, StringFormat='{}{0:dd.MM.yy}'}" HorizontalAlignment="Center" VerticalAlignment="Center" TextAlignment="Center" FontSize="24" Margin="12 0 10 5"/>
+            </StackPanel>
+
+        </Grid>
+    </Border>
 </Window>
