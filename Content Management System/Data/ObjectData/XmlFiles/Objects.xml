@@ -1,14 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Reviews>
   <Review>
-    <MovieName>asdasda</MovieName>
-    <Rating>2.5</Rating>
-    <Link>asdasdadasd</Link>
-    <DescriptionPath>C:\Users\Danijel Musli\Desktop\INDIVIDUAL PROJECTS\Content Management System\Content Management System\Data\ObjectData\RtfFiles\asdasda.rtf</DescriptionPath>
-    <ImagePath>C:\Users\Danijel Musli\Pictures\Screenshots\Screenshot 2026-01-08 003940.png</ImagePath>
-    <ObjectCreationTime>2026-04-14T20:48:09.5592715+02:00</ObjectCreationTime>
-  </Review>
-  <Review>
     <MovieName>The Shawshank Redemption</MovieName>
     <Rating>4.5</Rating>
     <Link>https://en.wikipedia.org/wiki/The_Shawshank_Redemption</Link>

@@ -1,4 +1,5 @@
 ﻿using Content_Management_System.Models;
+using Content_Management_System.UserControls;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -6,6 +7,7 @@ using System.IO;
 using System.Linq;
 using System.Windows;
 using System.Windows.Documents;
+using System.Windows.Media.Animation;
 using System.Xml.Linq;
 
 namespace Content_Management_System
@@ -21,8 +23,7 @@ namespace Content_Management_System
         public Review AddedReview { get; set; }
         public bool IsAdminLogged { get; set; }
 
-        int ItemsCountStart = 0;
-        int ItemsCountEnd = 0;
+        private bool IsReviewsChanged { get; set; } = false;
         public ObservableCollection<Review> Reviews { get; set; } = new ObservableCollection<Review>();
 
         public MainWindow()
@@ -32,7 +33,6 @@ namespace Content_Management_System
             this.DataContext = this;
 
             this.Reviews = new ObservableCollection<Review>(LoadObjects());
-            this.ItemsCountStart = this.Reviews.Count;
 
             this.Visibility = Visibility.Hidden;
 
@@ -49,8 +49,8 @@ namespace Content_Management_System
 
         public List<Review> LoadObjects()
         {
-            string path = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\..\Data\ObjectData\XmlFiles", "Objects.xml");
-            path = System.IO.Path.GetFullPath(path);
+            string path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\..\Data\ObjectData\XmlFiles", "Objects.xml");
+            path = Path.GetFullPath(path);
 
             XDocument document = XDocument.Load(path);
 
@@ -62,16 +62,16 @@ namespace Content_Management_System
                     Link = review.Element("Link")?.Value,
                     DescriptionPath = review.Element("DescriptionPath")?.Value,
                     ImagePath = review.Element("ImagePath")?.Value,
-                    ObjectCreationTime = DateTime.Now
+                    ObjectCreationTime = DateTime.Parse(
+                        review.Element("ObjectCreationTime")?.Value ?? DateTime.MinValue.ToString() )
                 }).ToList();
 
             return allObjects;
         }
-
         public void SaveObjects()
         {
-            string path = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\..\Data\ObjectData\XmlFiles", "Objects.xml");
-            path = System.IO.Path.GetFullPath(path);
+            string path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\..\Data\ObjectData\XmlFiles", "Objects.xml");
+            path = Path.GetFullPath(path);
             XDocument document = new XDocument(
                 new XElement("Reviews",
                     Reviews.Select(review =>
@@ -98,6 +98,8 @@ namespace Content_Management_System
             { 
                 AddedReview = addObjectWindow.NewReview;
                 this.Reviews.Insert(0, AddedReview);
+
+                this.IsReviewsChanged = true;
             }
         
         }
@@ -106,27 +108,32 @@ namespace Content_Management_System
         {
             List<Review> selected = Reviews.Where(x => x.IsSelected).ToList();
 
+            int itemStartCount = this.Reviews.Count;
+
             foreach (Review review in selected)
             {
                 string relativePath = review.DescriptionPath;
-                string path = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\..\Data\ObjectData\RtfFiles", relativePath);
-                path = System.IO.Path.GetFullPath(path);
+                string path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\..\Data\ObjectData\RtfFiles", relativePath);
+                path = Path.GetFullPath(path);
 
                 if (File.Exists(path))
                 {
-
-                    try 
+                    try
                     {
                         File.Delete(path);
-                        MessageBox.Show("Uspesno obrisano");
                     }
-                    catch(Exception re) 
+                    catch (Exception re)
                     {
                         MessageBox.Show(re.Message);
                     }
                 }
 
                 Reviews.Remove(review);
+            }
+
+            if (itemStartCount != this.Reviews.Count) 
+            {
+                this.IsReviewsChanged = true;
             }
 
         }
@@ -144,12 +151,28 @@ namespace Content_Management_System
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            this.ItemsCountEnd = this.Reviews.Count;
-            if (this.ItemsCountStart != this.ItemsCountEnd)
+            if (this.IsReviewsChanged)
             {
                 this.SaveObjects();
             }
         }
 
+        private void ReviewItem_ReviewEdited(object sender, RoutedEventArgs e)
+        {
+            if (sender is ReviewItem item && item.DataContext is Review original)
+            {
+                if (e.Source is ReviewItem revItem && item.DataContext is Review edited)
+                {
+                    int index = Reviews.IndexOf(original);
+                    if (index >= 0)
+                    {
+                        Reviews.RemoveAt(index);
+                        this.Reviews.Insert(index, edited);
+
+                        this.IsReviewsChanged = true;
+                    }
+                }
+            }
+        }
     }
 }

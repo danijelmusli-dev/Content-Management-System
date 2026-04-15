@@ -9,53 +9,81 @@
         mc:Ignorable="d"
         
         WindowStyle="None"
+        AllowsTransparency="True"
         WindowStartupLocation="CenterScreen"
         
+        Background="Transparent"
+        
         Title="ObjectReview" Height="850" Width="600">
-    <Border Style="{DynamicResource BorderedGridStyle}">
-        <Grid Style="{DynamicResource GridStyle}">
 
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="2.5*"/>
-                <RowDefinition Height="2*"/>
-                <RowDefinition Height="4*"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="1*"/>
-            </Grid.RowDefinitions>
+    <Border>
+        <Canvas>
+            <Path Fill="{DynamicResource Primary0Color}" Stroke="{DynamicResource Secondary0Color}" StrokeThickness="1">
+                <Path.Data>
+                    <GeometryGroup>
+                        <CombinedGeometry GeometryCombineMode="Exclude">
+                            <CombinedGeometry.Geometry1>
+                                <RectangleGeometry Rect="0,0,600,850"/>
+                            </CombinedGeometry.Geometry1>
+                            <CombinedGeometry.Geometry2>
+                                <GeometryGroup>
+                                    <RectangleGeometry  Rect="0,90,60,100"/>
+                                    <RectangleGeometry Rect="0,280,60,100"/>
+                                    <RectangleGeometry Rect="0,470,60,100"/>
+                                    <RectangleGeometry Rect="0,660,60,100"/>
 
-            <uc:WindowHeader Grid.Row="0" Grid.ColumnSpan="2" MinimizedButton="True" MaximizedButton="False" CloseButton="True"/>
-            
-            <Image x:Name="MoviePosterIMG" Grid.Row="1" Source="{Binding ImagePath}" Stretch="UniformToFill" VerticalAlignment="Center" HorizontalAlignment="Center" Width="300" Height="Auto" Margin="0 5 0 10"/>
+                                    <RectangleGeometry Rect="540,90,60,100"/>
+                                    <RectangleGeometry Rect="540,280,60,100"/>
+                                    <RectangleGeometry Rect="540,470,60,100"/>
+                                    <RectangleGeometry Rect="540,660,60,100"/>
+                                </GeometryGroup>
+                            </CombinedGeometry.Geometry2>
+                        </CombinedGeometry>
+                    </GeometryGroup>
+                </Path.Data>
+            </Path>
 
-            <TextBlock x:Name="MovieNameTbl" Text="{Binding MovieName}" Style="{DynamicResource TextBlockStyle}" Grid.Row="2" TextAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="32" FontWeight="Bold" Margin="10"/>
+            <uc:WindowHeader Canvas.Right="0" Canvas.Top="0" MinimizedButton="True" MaximizedButton="False" CloseButton="True"/>
 
-            <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
-                <StackPanel x:Name="StarsPanel" Orientation="Horizontal" HorizontalAlignment="Center">
-                    <fa5:SvgAwesome Icon="Regular_Star" Foreground="{DynamicResource StarColor}" Width="48" Height="48" Margin="0 0 3 0"/>
-                    <fa5:SvgAwesome Icon="Regular_Star" Foreground="{DynamicResource StarColor}" Width="48" Height="48" Margin="0 0 3 0"/>
-                    <fa5:SvgAwesome Icon="Regular_Star" Foreground="{DynamicResource StarColor}" Width="48" Height="48" Margin="0 0 3 0"/>
-                    <fa5:SvgAwesome Icon="Regular_Star" Foreground="{DynamicResource StarColor}" Width="48" Height="48" Margin="0 0 3 0"/>
-                    <fa5:SvgAwesome Icon="Regular_Star" Foreground="{DynamicResource StarColor}" Width="48" Height="48" Margin="0 0 3 0"/>
-                </StackPanel>
+            <Image x:Name="MoviePosterIMG" Source="{Binding ImagePath}" Stretch="UniformToFill"
+                   Canvas.Left="150" Canvas.Top="60" Width="300" Height="400"/>
+
+            <TextBlock x:Name="MovieNameTbl" Text="{Binding MovieName}" Style="{DynamicResource TextBlockStyle}"
+                       Canvas.Left="50" Canvas.Top="480" Width="500"
+                       TextAlignment="Center" FontSize="32" FontWeight="Bold"/>
+
+            <StackPanel x:Name="StarsPanel" Orientation="Horizontal"
+                        Canvas.Left="160" Canvas.Top="540">
+                <fa5:SvgAwesome Icon="Regular_Star" Foreground="{DynamicResource StarColor}" Width="48" Height="48" Margin="3"/>
+                <fa5:SvgAwesome Icon="Regular_Star" Foreground="{DynamicResource StarColor}" Width="48" Height="48" Margin="3"/>
+                <fa5:SvgAwesome Icon="Regular_Star" Foreground="{DynamicResource StarColor}" Width="48" Height="48" Margin="3"/>
+                <fa5:SvgAwesome Icon="Regular_Star" Foreground="{DynamicResource StarColor}" Width="48" Height="48" Margin="3"/>
+                <fa5:SvgAwesome Icon="Regular_Star" Foreground="{DynamicResource StarColor}" Width="48" Height="48" Margin="3"/>
             </StackPanel>
 
-            <RichTextBox x:Name="ReviewDescriptionRtb" Style="{DynamicResource RichTextBoxStyle}" Grid.Row="4" Loaded="ReviewDescriptionRtb_Loaded" IsReadOnly="True" BorderBrush="Transparent" Background="Transparent" HorizontalAlignment="Center" HorizontalContentAlignment="Center" Margin="10"/>
+            <RichTextBox x:Name="ReviewDescriptionRtb" Style="{DynamicResource RichTextBoxStyle}"
+                         Canvas.Left="50" Canvas.Top="600" Width="500" Height="120"
+                         Loaded="ReviewDescriptionRtb_Loaded" IsReadOnly="True"
+                         BorderBrush="Transparent" Background="Transparent"/>
 
-            <TextBlock x:Name="MovieLinkTbl" Style="{DynamicResource TextBlockStyle}" Grid.Row="5" TextAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="18" FontWeight="Bold" Margin="10">
-                <Hyperlink x:Name="MovieLink" Style="{DynamicResource HyperlinkStyle}" NavigateUri="{Binding Link}" Foreground="{DynamicResource Secondary0Color}" TextDecorations="Underline" 
-                           RequestNavigate="Hyperlink_RequestNavigate">
+            <TextBlock x:Name="MovieLinkTbl" Style="{DynamicResource TextBlockStyle}"
+                       Canvas.Left="50" Canvas.Top="740" Width="500"
+                       TextAlignment="Center" FontSize="18" FontWeight="Bold">
+                <Hyperlink x:Name="MovieLink" Style="{DynamicResource HyperlinkStyle}"
+                           NavigateUri="{Binding Link}" Foreground="{DynamicResource Secondary0Color}"
+                           TextDecorations="Underline" RequestNavigate="Hyperlink_RequestNavigate">
                     <Run Text="{Binding Link}"/>
                 </Hyperlink>
             </TextBlock>
 
-            <StackPanel Grid.Row="6" Orientation="Horizontal" HorizontalAlignment="Center">
-                <TextBlock Style="{DynamicResource TextBlockStyle}" FontSize="24">Creation Time: </TextBlock>
-                <TextBlock x:Name="CreationTimeTB" Style="{DynamicResource TextBlockStyle}" Foreground="{DynamicResource TextLightColorBrush}" Text="{Binding ObjectCreationTime, StringFormat='{}{0:dd.MM.yy}'}" HorizontalAlignment="Center" VerticalAlignment="Center" TextAlignment="Center" FontSize="24" Margin="12 0 10 5"/>
+            <StackPanel Orientation="Horizontal" Canvas.Left="200" Canvas.Top="780">
+                <TextBlock Style="{DynamicResource TextBlockStyle}" FontSize="24">Creation Time:</TextBlock>
+                <TextBlock x:Name="CreationTimeTB" Style="{DynamicResource TextBlockStyle}"
+                           Foreground="{DynamicResource TextLightColorBrush}"
+                           Text="{Binding ObjectCreationTime, StringFormat='{}{0:dd.MM.yy}'}"
+                           FontSize="24" Margin="12 0 10 5"/>
             </StackPanel>
 
-        </Grid>
+        </Canvas>
     </Border>
 </Window>

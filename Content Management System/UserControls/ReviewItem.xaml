@@ -33,7 +33,7 @@
 
         <TextBlock x:Name="MovieNameTbl" Style="{DynamicResource TextBlockStyle}" Grid.Row="1" TextAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="18" FontWeight="Bold">
             <Hyperlink x:Name="MovieLink" Style="{DynamicResource HyperlinkStyle}" NavigateUri="{Binding Link}" RequestNavigate="Hyperlink_RequestNavigate">
-                <Run Text="{Binding MovieName}" />
+                <Run Text="{Binding MovieName}"/>
             </Hyperlink>
         </TextBlock>
 

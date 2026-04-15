@@ -5,7 +5,6 @@ namespace Content_Management_System.Models
 {
     public class Review
     {
-
         private string _imagePath;
         private string _movieName;
         private string _link;
@@ -17,111 +16,75 @@ namespace Content_Management_System.Models
         public string ImagePath
         {
             get => _imagePath;
-            set
-            {
-                if (_imagePath != value)
-                {
-                    _imagePath = value;
-                    OnPropertyChanged(nameof(ImagePath));
-                }
-            }
+            set => _imagePath = value;
         }
 
         public string MovieName
         {
             get => _movieName;
-            set
-            {
-                if (_movieName != value)
-                {
-                    _movieName = value;
-                    OnPropertyChanged(nameof(MovieName));
-                }
-            }
+            set => _movieName = value;
         }
 
         public string Link
         {
             get => _link;
-            set
-            {
-                if (_link != value)
-                {
-                    _link = value;
-                    OnPropertyChanged(nameof(Link));
-                }
-            }
+            set => _link = value;
         }
 
         public float Rating
         {
             get => _rating;
-            set
-            {
-                if (_rating != value)
-                {
-                    _rating = value;
-                    OnPropertyChanged(nameof(Rating));
-                }
-            }
+            set => _rating = value;
         }
 
         public string DescriptionPath
         {
             get => _descriptionPath;
-            set
-            {
-                if (_descriptionPath != value)
-                {
-                    _descriptionPath = value;
-                    OnPropertyChanged(nameof(DescriptionPath));
-                }
-            }
+            set => _descriptionPath = value;
         }
 
         public DateTime ObjectCreationTime
         {
             get => _objectCreationTime;
-            set
-            {
-                if (_objectCreationTime != value)
-                {
-                    _objectCreationTime = value;
-                    OnPropertyChanged(nameof(ObjectCreationTime));
-                }
-            }
+            set => _objectCreationTime = value;
         }
 
         public bool IsSelected
         {
             get => _isSelected;
-            set
-            {
-                if (_isSelected != value)
-                {
-                    _isSelected = value;
-                    OnPropertyChanged(nameof(IsSelected));
-                }
-            }
+            set => _isSelected = value;
         }
 
-        public Review()
-        {
-            _objectCreationTime = DateTime.Now;
-        }
+        public Review() { }
+
         public Review(string movieName, float rating, string link, string description, string imagePath, DateTime objectCreationTime)
         {
-            _rating = rating;
             _movieName = movieName;
+            _rating = rating;
             _link = link;
             _descriptionPath = description;
             _imagePath = imagePath;
             _objectCreationTime = objectCreationTime;
         }
 
-        public event PropertyChangedEventHandler PropertyChanged;
-        protected void OnPropertyChanged(string propertyName) =>
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        public Review(Review source)
+        {
+            if (source == null)
+                return;
 
+            _movieName = source.MovieName;
+            _rating = source.Rating;
+            _link = source.Link;
+            _descriptionPath = source.DescriptionPath;
+            _imagePath = source.ImagePath;
+            _objectCreationTime = source.ObjectCreationTime;
+            _isSelected = source.IsSelected;
+        }
+
+        public Review Clone()
+        {
+            return new Review(this);
+        }
     }
 }
+
