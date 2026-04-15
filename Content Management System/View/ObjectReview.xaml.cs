@@ -65,7 +65,6 @@ namespace Content_Management_System.View
 
         private void ReviewDescriptionRtb_Loaded(object sender, RoutedEventArgs e)
         {
-
             string relativePath = this.LookReview.DescriptionPath;
             string path = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\..\Data\ObjectData\RtfFiles", relativePath);
             path = System.IO.Path.GetFullPath(path);

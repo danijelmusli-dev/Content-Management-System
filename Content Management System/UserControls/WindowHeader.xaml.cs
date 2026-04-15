@@ -3,9 +3,6 @@ using System.Windows.Controls;
 
 namespace Content_Management_System.UserControls
 {
-    /// <summary>
-    /// Interaction logic for WindowHeader.xaml
-    /// </summary>
     public partial class WindowHeader : UserControl
     {
 

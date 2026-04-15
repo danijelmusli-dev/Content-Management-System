@@ -6,8 +6,11 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Text;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
@@ -16,20 +19,44 @@ using System.Windows.Shapes;
 
 namespace Content_Management_System.View
 {
-    /// <summary>
-    /// Interaction logic for ObjectAdd.xaml
-    /// </summary>
-    public partial class ObjectAdd : Window
+    public partial class ObjectEdit : Window
     {
-        public Review NewReview { get; private set; } = new Review();
-
-        public ObjectAdd()
+        public Review EditReview { get; set; } = new Review();
+        public ObjectEdit(Review review)
         {
             InitializeComponent();
 
-            this.DataContext = this;
+            this.EditReview = review;
+            this.DataContext = this.EditReview;
+
+            this.SetUpStars();
         }
 
+        private void SetUpStars()
+        {
+            float rating = EditReview.Rating;
+
+            for (int i = 0; i < StarsPanel.Children.Count; i++)
+            {
+                if (StarsPanel.Children[i] is Button btn && btn.Content is SvgAwesome icon)
+                {
+                    if (rating >= 1)
+                    {
+                        icon.Icon = EFontAwesomeIcon.Solid_Star;
+                    }
+                    else if (rating >= 0.5)
+                    {
+                        icon.Icon = EFontAwesomeIcon.Solid_StarHalfAlt;
+                    }
+                    else
+                    {
+                        icon.Icon = EFontAwesomeIcon.Regular_Star;
+                    }
+                }
+                rating -= 1;
+            }
+        }
+        
         private void FontFamilyComboBox_Loaded(object sender, RoutedEventArgs e)
         {
             this.FontFamilyComboBox.ItemsSource = System.Windows.Media.Fonts.SystemFontFamilies.OrderBy(f => f.Source);
@@ -54,7 +81,7 @@ namespace Content_Management_System.View
 
             dialog.Multiselect = false;
 
-            if (dialog.ShowDialog() == true) 
+            if (dialog.ShowDialog() == true)
             {
                 try
                 {
@@ -82,7 +109,7 @@ namespace Content_Management_System.View
             Point mouseDownPoint = Mouse.GetPosition(clickedBtn);
             double x = mouseDownPoint.X;
 
-            NewReview.Rating = index;
+            EditReview.Rating = index;
 
             for (int i = 0; i < this.StarsPanel.Children.Count; i++)
             {
@@ -90,15 +117,15 @@ namespace Content_Management_System.View
                 SvgAwesome svg = btn.Content as SvgAwesome;
 
                 if (svg != null)
-                { 
-                    svg.Icon = (index > i) ? EFontAwesomeIcon.Solid_Star : EFontAwesomeIcon.Regular_Star; 
+                {
+                    svg.Icon = (index > i) ? EFontAwesomeIcon.Solid_Star : EFontAwesomeIcon.Regular_Star;
                 }
             }
 
             if (svgClicked != null)
             {
-                svgClicked.Icon = (x <= ((clickedBtn.Content as SvgAwesome).Width / 2))? EFontAwesomeIcon.Solid_StarHalfAlt : EFontAwesomeIcon.Solid_Star;
-                NewReview.Rating += (x <= ((clickedBtn.Content as SvgAwesome).Width / 2))? 0.5f : 1;
+                svgClicked.Icon = (x <= ((clickedBtn.Content as SvgAwesome).Width / 2)) ? EFontAwesomeIcon.Solid_StarHalfAlt : EFontAwesomeIcon.Solid_Star;
+                EditReview.Rating += (x <= ((clickedBtn.Content as SvgAwesome).Width / 2)) ? 0.5f : 1;
             }
         }
 
@@ -181,44 +208,76 @@ namespace Content_Management_System.View
         {
             this.Close();
         }
-        private void AddObjectBtn_Click(object sender, RoutedEventArgs e)
+        private void EditObjectBtn_Click(object sender, RoutedEventArgs e)
         {
-            if(this.ValidateInput())
+            if (this.ValidateInput())
             {
-                NewReview.ImagePath = ((BitmapImage)this.ObjectImage.Source).UriSource.LocalPath;
-                NewReview.MovieName = this.ObjectNameTb.Text;
-                NewReview.Link = this.ObjectLinkTb.Text;
-                
-                string path = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\..\Data\ObjectData\RtfFiles", $"{NewReview.MovieName}.rtf");
-                path = System.IO.Path.GetFullPath(path);
 
-                using (FileStream fs = new FileStream(path, FileMode.OpenOrCreate))
+                var source = this.ObjectImage.Source as BitmapSource;
+                if (source is BitmapImage bmp)
+                {
+                    // Ako je BitmapImage, ima UriSource
+                    if (EditReview.ImagePath != bmp.UriSource.AbsolutePath)
+                    {
+                        EditReview.ImagePath = bmp.UriSource.LocalPath;
+                    }
+                }
+                else
+                {
+                    // Ako je BitmapFrameDecode, nema UriSource
+                    // moraš da pamtiš putanju ručno kada učitavaš sliku
+                }
+
+                EditReview.MovieName = this.ObjectNameTb.Text;
+                EditReview.Link = this.ObjectLinkTb.Text;
+
+                string path = EditReview.DescriptionPath;
+
+                using (FileStream fs = new FileStream(path, FileMode.Open))
                 {
                     TextRange textRange = new TextRange(this.DescriptionRichTextBox.Document.ContentStart, this.DescriptionRichTextBox.Document.ContentEnd);
                     textRange.Save(fs, DataFormats.Rtf);
                 }
-                NewReview.DescriptionPath = path;
-                NewReview.ObjectCreationTime = DateTime.Now;
+                EditReview.DescriptionPath = path;
+                //EditReview.ObjectCreationTime = DateTime.Now;
 
                 this.DialogResult = true;
                 this.Close();
             }
         }
 
+        private void DescriptionRichTextBox_Loaded(object sender, RoutedEventArgs e)
+        {
+            string relativePath = this.EditReview.DescriptionPath;
+            string path = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\..\Data\ObjectData\RtfFiles", relativePath);
+            path = System.IO.Path.GetFullPath(path);
+
+            if (File.Exists(path))
+            {
+                TextRange range = new TextRange(
+                    DescriptionRichTextBox.Document.ContentStart,
+                    DescriptionRichTextBox.Document.ContentEnd);
+
+                using (FileStream fs = new FileStream(path, FileMode.Open))
+                {
+                    range.Load(fs, DataFormats.Rtf);
+                }
+            }
+        }
         private void DescriptionRichTextBox_SelectionChanged(object sender, RoutedEventArgs e)
         {
             if (this.DescriptionRichTextBox.Selection != null)
             {
                 object fontFamily = this.DescriptionRichTextBox.Selection.GetPropertyValue(Inline.FontFamilyProperty);
-                object fontSize   = this.DescriptionRichTextBox.Selection.GetPropertyValue(Inline.FontSizeProperty);
-                object textColor  = this.DescriptionRichTextBox.Selection.GetPropertyValue(Inline.ForegroundProperty);
+                object fontSize = this.DescriptionRichTextBox.Selection.GetPropertyValue(Inline.FontSizeProperty);
+                object textColor = this.DescriptionRichTextBox.Selection.GetPropertyValue(Inline.ForegroundProperty);
 
-                object fontWeight     = this.DescriptionRichTextBox.Selection.GetPropertyValue(Inline.FontWeightProperty);
-                object fontStyle      = this.DescriptionRichTextBox.Selection.GetPropertyValue(Inline.FontStyleProperty);
+                object fontWeight = this.DescriptionRichTextBox.Selection.GetPropertyValue(Inline.FontWeightProperty);
+                object fontStyle = this.DescriptionRichTextBox.Selection.GetPropertyValue(Inline.FontStyleProperty);
                 object textDecoration = this.DescriptionRichTextBox.Selection.GetPropertyValue(Inline.TextDecorationsProperty);
 
                 this.FontFamilyComboBox.SelectedItem = fontFamily;
-                this.FontSizeComboBox.SelectedItem   = fontSize;
+                this.FontSizeComboBox.SelectedItem = fontSize;
 
                 if (textColor is SolidColorBrush brush)
                 {
@@ -232,9 +291,8 @@ namespace Content_Management_System.View
                     }
                 }
 
-
-                this.BoldBtn.IsChecked      = (fontWeight.Equals(FontWeights.Bold));
-                this.ItalicBtn.IsChecked    = (fontStyle.Equals(FontStyles.Italic));
+                this.BoldBtn.IsChecked = (fontWeight.Equals(FontWeights.Bold));
+                this.ItalicBtn.IsChecked = (fontStyle.Equals(FontStyles.Italic));
                 this.UnderlineBtn.IsChecked = (textDecoration.Equals(TextDecorations.Underline));
             }
         }
@@ -255,7 +313,7 @@ namespace Content_Management_System.View
                 result = false;
             }
 
-            if (this.NewReview.Rating == 0)
+            if (this.EditReview.Rating == 0)
             {
                 this.ObjectRatingErrTb.Text = "Movie Rating is missing";
                 result = false;

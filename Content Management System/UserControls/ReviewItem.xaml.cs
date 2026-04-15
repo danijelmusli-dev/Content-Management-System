@@ -5,6 +5,7 @@ using System;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
+using System.Security.Cryptography;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
@@ -12,19 +13,26 @@ using System.Windows.Navigation;
 
 namespace Content_Management_System.UserControls
 {
-    /// <summary>
-    /// Interaction logic for ReviewItem.xaml
-    /// </summary>
+
     public partial class ReviewItem : UserControl
     {
         public static readonly DependencyProperty EditButtonEnabledProperty =
-        DependencyProperty.Register(
-            nameof(EditButtonEnabled),          // ime property-ja
-            typeof(bool),                       // tip
-            typeof(ReviewItem),                 // vlasnik (klasa gde se registruje)
-            new PropertyMetadata(false));       // podrazumevana vrednost
+        DependencyProperty.Register(nameof(EditButtonEnabled), typeof(bool), 
+            typeof(ReviewItem), new PropertyMetadata(false));
 
-        // CLR wrapper
+        public static readonly RoutedEvent ReviewItemEditedEvent =
+            EventManager.RegisterRoutedEvent(
+                "ReviewItemEditedEvent",
+                RoutingStrategy.Bubble,
+                typeof(RoutedEvent),
+                typeof(ReviewItem));
+        
+        public event RoutedEventHandler ReviewEdited
+        {
+            add { AddHandler(ReviewItemEditedEvent, value); }
+            remove { RemoveHandler(ReviewItemEditedEvent, value); }
+        }
+
         public bool EditButtonEnabled
         {
             get => (bool)GetValue(EditButtonEnabledProperty);
@@ -34,30 +42,25 @@ namespace Content_Management_System.UserControls
         public ReviewItem()
         {
             InitializeComponent();
+            SetUpStars();
         }
 
         private void UserControl_DataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
-            if (e.OldValue is Models.Review oldReview)
-                oldReview.PropertyChanged -= Review_PropertyChanged;
-
-            if (e.NewValue is Models.Review newReview)
-                newReview.PropertyChanged += Review_PropertyChanged;
-
             SetUpStars();
         }
 
         private void Review_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == nameof(Models.Review.IsSelected))
+            if (e.PropertyName == nameof(Review.IsSelected))
             {
-                ReviewCheckBox.IsChecked = ((Models.Review)sender).IsSelected;
+                ReviewCheckBox.IsChecked = ((Review)sender).IsSelected;
             }
         }
 
         private void SetUpStars()
         {
-            if (DataContext is Content_Management_System.Models.Review review)
+            if (DataContext is Review review)
             {
                 float rating = review.Rating;
 
@@ -100,8 +103,8 @@ namespace Content_Management_System.UserControls
         {
 
             string relativePath = ((Review)this.DataContext).DescriptionPath;
-            string path = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\..\Data\ObjectData\RtfFiles", relativePath);
-            path = System.IO.Path.GetFullPath(path);
+            string path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\..\Data\ObjectData\RtfFiles", relativePath);
+            path = Path.GetFullPath(path);
 
             if (File.Exists(path))
             {
@@ -127,7 +130,31 @@ namespace Content_Management_System.UserControls
 
         private void EditReviewBtn_Click(object sender, RoutedEventArgs e)
         {
+            if (this.DataContext is Review original)
+            {
 
+                Review copy = original.Clone();
+                ObjectEdit objectEdit = new ObjectEdit(copy);
+
+                if (objectEdit.ShowDialog() == true)
+                {
+                    
+                    original.MovieName = objectEdit.EditReview.MovieName;
+                    original.Rating = objectEdit.EditReview.Rating;
+                    original.Link = objectEdit.EditReview.Link;
+                    original.DescriptionPath = objectEdit.EditReview.DescriptionPath;
+                    original.ImagePath = objectEdit.EditReview.ImagePath;
+
+                    this.SetUpStars();
+                    this.ReviewDescriptionRtb_Loaded(this, new RoutedEventArgs());
+
+                    RaiseEvent(new RoutedEventArgs(ReviewItemEditedEvent, this.DataContext as Review));
+
+                }
+
+            }
         }
+
+
     }
 }

@@ -1,0 +1,150 @@
+﻿<Window x:Class="Content_Management_System.View.ObjectEdit"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Content_Management_System.View"
+        mc:Ignorable="d"
+        
+        xmlns:uc="clr-namespace:Content_Management_System.UserControls" 
+        xmlns:fa5="http://schemas.fontawesome.com/icons/"
+        
+        WindowStartupLocation="CenterScreen"
+        WindowStyle="None"
+        
+        Height="650" Width="900">
+    <Border Style="{DynamicResource BorderedGridStyle}">
+        <Grid Style="{DynamicResource GridStyle}">
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="2*"/>
+            </Grid.ColumnDefinitions>
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="2*"/>
+                <RowDefinition Height="6*"/>
+                <RowDefinition Height="2*"/>
+                <RowDefinition Height="1.5*"/>
+                <RowDefinition Height="1*"/>
+            </Grid.RowDefinitions>
+
+            <uc:WindowHeader Grid.Row="0" Grid.ColumnSpan="2" MinimizedButton="True" MaximizedButton="False" CloseButton="True"/>
+
+            <StackPanel x:Name="HeaderStackPanel" Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="30 0 0 0">
+                <fa5:SvgAwesome Icon="Solid_Edit" Foreground="{DynamicResource Secondary0Color}" Width="48" Height="48" Margin="0 0 8 0"/>
+                <TextBlock x:Name="HeaderTextTbl" Grid.Row="1" Style="{DynamicResource HeaderTextBlockStyle}" Text="Edit Review" FontSize="36"/>
+            </StackPanel>
+
+            <StackPanel x:Name="ImageAddStackPanel" Grid.Column="0" Grid.Row="2" Background="Transparent" MouseLeftButtonUp="ImageAddStackPanel_MouseLeftButtonUp" Panel.ZIndex="3" IsHitTestVisible="True">
+                <Label Style="{DynamicResource LabelStyle}" Content="Image:" FontSize="18" Margin="10"/>
+                <Image x:Name="ObjectImage" Source="{Binding ImagePath}" Stretch="Fill" VerticalAlignment="Center" HorizontalAlignment="Center" Width="Auto" Height="Auto" Panel.ZIndex="2"/>
+                <fa5:SvgAwesome x:Name="ObjectImageIcon" Icon="Regular_Images" Foreground="{DynamicResource Primary1Color}" Width="196" Height="196" Panel.ZIndex="1"/>
+                <TextBlock x:Name="ObjectImageErrTb" Foreground="{DynamicResource TextErrorColorBrush}" FontSize="12" VerticalAlignment="Bottom" Margin="10 0 0 0"></TextBlock>
+            </StackPanel>
+
+            <StackPanel x:Name="NameAddStackPanel" Grid.Column="0" Grid.Row="3" Grid.RowSpan="2" Margin="10">
+                <Label Style="{DynamicResource LabelStyle}" Content="Name:" FontSize="18" />
+                <TextBox x:Name="ObjectNameTb" Style="{DynamicResource TextBoxStyle}" Text="{Binding MovieName}" Height="30" FontSize="16" Margin="0"/>
+                <TextBlock x:Name="ObjectNameErrTb" Foreground="{DynamicResource TextErrorColorBrush}" FontSize="12"/>
+            </StackPanel>
+
+
+            <StackPanel x:Name="RatingAddStackPanel" Grid.Column="0" Grid.Row="4" Grid.RowSpan="2" Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
+                <StackPanel x:Name="StarsPanel" Orientation="Horizontal" HorizontalAlignment="Center">
+                    <Button x:Name="StarBtn1" Click="StarBtn1_Click" Style="{DynamicResource StarButtonStyle}">
+                        <fa5:SvgAwesome Icon="Regular_Star" Foreground="{Binding Foreground, RelativeSource={RelativeSource AncestorType=Button}}" Width="48" Height="48" Margin="0 0 3 0"/>
+                    </Button>
+                    <Button x:Name="StarBtn2" Click="StarBtn1_Click" Style="{DynamicResource StarButtonStyle}" Background="Transparent" BorderBrush="Transparent" Width="Auto" Height="Auto">
+                        <fa5:SvgAwesome Icon="Regular_Star" Foreground="{Binding Foreground, RelativeSource={RelativeSource AncestorType=Button}}" Width="48" Height="48" Margin="0 0 3 0"/>
+                    </Button>
+                    <Button x:Name="StarBtn3" Click="StarBtn1_Click" Style="{DynamicResource StarButtonStyle}" Background="Transparent" BorderBrush="Transparent" Width="Auto" Height="Auto">
+                        <fa5:SvgAwesome Icon="Regular_Star" Foreground="{Binding Foreground, RelativeSource={RelativeSource AncestorType=Button}}" Width="48" Height="48" Margin="0 0 3 0"/>
+                    </Button>
+                    <Button x:Name="StarBtn4" Click="StarBtn1_Click" Style="{DynamicResource StarButtonStyle}" Background="Transparent" BorderBrush="Transparent" Width="Auto" Height="Auto">
+                        <fa5:SvgAwesome Icon="Regular_Star" Foreground="{Binding Foreground, RelativeSource={RelativeSource AncestorType=Button}}" Width="48" Height="48" Margin="0 0 3 0"/>
+                    </Button>
+                    <Button x:Name="StarBtn5" Click="StarBtn1_Click" Style="{DynamicResource StarButtonStyle}" Background="Transparent" BorderBrush="Transparent" Width="Auto" Height="Auto">
+                        <fa5:SvgAwesome Icon="Regular_Star" Foreground="{Binding Foreground, RelativeSource={RelativeSource AncestorType=Button}}" Width="48" Height="48" Margin="0 0 3 0"/>
+                    </Button>
+                </StackPanel>
+
+                <TextBlock x:Name="ObjectRatingErrTb" Foreground="{DynamicResource TextErrorColorBrush}" FontSize="12" VerticalAlignment="Bottom"/>
+            </StackPanel>
+
+            <DockPanel x:Name="DescriptionDockPanel" Grid.Column="1" Grid.Row="2">
+
+                <ToolBar x:Name="DescriptionToolBar" Style="{DynamicResource ToolBarStyle}" DockPanel.Dock="Top" Margin="10 5 10 5" AllowDrop="False">
+                    <ToggleButton x:Name="BoldBtn" Click="BoldBtn_Click" Style="{DynamicResource ToggleButtonStyle}" Margin=" 0 0 5 0">
+                        <fa5:SvgAwesome Icon="Solid_Bold" Foreground="{Binding Foreground, RelativeSource={RelativeSource AncestorType=ToggleButton}}" Width="18" Height="18" />
+                    </ToggleButton>
+                    <ToggleButton x:Name="ItalicBtn" Click="ItalicBtn_Click" Style="{DynamicResource ToggleButtonStyle}" Margin=" 0 0 5 0">
+                        <fa5:SvgAwesome Icon="Solid_Italic" Foreground="{Binding Foreground, RelativeSource={RelativeSource AncestorType=ToggleButton}}" Width="18" Height="18"/>
+                    </ToggleButton>
+                    <ToggleButton x:Name="UnderlineBtn" Click="UnderlineBtn_Click" Style="{DynamicResource ToggleButtonStyle}" Margin=" 0 0 5 0">
+                        <fa5:SvgAwesome Icon="Solid_Underline" Foreground="{Binding Foreground, RelativeSource={RelativeSource AncestorType=ToggleButton}}" Width="18" Height="18"/>
+                    </ToggleButton>
+
+                    <Separator Margin="5 0 10 0" Foreground="{DynamicResource Primary1Color}"/>
+
+                    <ComboBox x:Name="FontFamilyComboBox" Style="{DynamicResource ComboBoxStyle}" SelectionChanged="FontFamilyComboBox_SelectionChanged" Loaded="FontFamilyComboBox_Loaded" Width="120" IsTextSearchEnabled="True" IsTextSearchCaseSensitive="False">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Source}" FontFamily="{Binding}" />
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
+
+                    <ComboBox x:Name="FontSizeComboBox" Style="{DynamicResource ComboBoxStyle}" SelectionChanged="FontSizeComboBox_SelectionChanged" Loaded="FontSizeComboBox_Loaded" Width="50" IsTextSearchCaseSensitive="False" IsTextSearchEnabled="False" Margin="10 0 0 0">
+
+                    </ComboBox>
+
+
+                    <Separator Margin="10 0 10 0" Foreground="{DynamicResource Primary1Color}"/>
+
+                    <Button x:Name="IncreaseTextSizeBtn" Click="IncreaseTextSizeBtn_Click" Style="{DynamicResource WindowButtonStyle}">
+                        <fa5:SvgAwesome Icon="Solid_Plus" Foreground="{Binding Foreground, RelativeSource={RelativeSource AncestorType=Button}}" Width="16" Height="16" Margin="0 0 5 0"/>
+                    </Button>
+                    <Button x:Name="DecreaseTextSizeBtn" Click="DecreaseTextSizeBtn_Click" Style="{DynamicResource WindowButtonStyle}">
+                        <fa5:SvgAwesome Icon="Solid_Minus" Foreground="{Binding Foreground, RelativeSource={RelativeSource AncestorType=Button}}" Width="16" Height="16" Margin="0 0 5 0"/>
+                    </Button>
+
+                    <Separator Margin="10 0 10 0" Foreground="{DynamicResource Primary1Color}"/>
+
+                    <ComboBox x:Name="ColorComboBox" Style="{DynamicResource ComboBoxStyle}" SelectionChanged="ColorComboBox_SelectionChanged" Loaded="ColorComboBox_Loaded" Width="120" IsTextSearchCaseSensitive="True" IsTextSearchEnabled="true">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <Rectangle Width="16" Height="16" Fill="{Binding Name}" Margin="2" Stroke="{DynamicResource TextLightColorBrush}" StrokeThickness="0.5" RadiusX="20" RadiusY="20"/>
+                                    <TextBlock Text="{Binding Name}" Margin="5,0,0,0"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
+
+                    <Button x:Name="SaveRtxFileBtn" Click="SaveRtxFileBtn_Click" Style="{DynamicResource WindowButtonStyle}" HorizontalContentAlignment="Center" Margin="10 0 5 0">
+                        <fa5:SvgAwesome Icon="Regular_FileAlt" Foreground="{Binding Foreground, RelativeSource={RelativeSource AncestorType=Button}}" Width="20" Height="20"/>
+                    </Button>
+
+                </ToolBar>
+
+                <RichTextBox x:Name="DescriptionRichTextBox" Style="{DynamicResource RichTextBoxStyle}" Loaded="DescriptionRichTextBox_Loaded"  SelectionChanged="DescriptionRichTextBox_SelectionChanged" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" FontSize="16" Margin="10 0 10 0"/>
+
+            </DockPanel>
+
+
+            <StackPanel x:Name="LinkAddStackPanel" Grid.Column="1" Grid.Row="3" Grid.RowSpan="2" Margin="10">
+                <Label Style="{DynamicResource LabelStyle}" Content="Link:" FontSize="18"/>
+                <TextBox x:Name="ObjectLinkTb" Style="{DynamicResource TextBoxStyle}" Text="{Binding Link}" Height="30" FontSize="16" Margin="0"/>
+                <TextBlock x:Name="ObjectLinkErrTb" Foreground="{DynamicResource TextErrorColorBrush}" FontSize="12" VerticalAlignment="Bottom"></TextBlock>
+            </StackPanel>
+            
+            <StackPanel x:Name="ButtonsAddStackPanel" Grid.Column="1" Grid.Row="5" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center"  Margin="0 0 20 0">
+                <Button x:Name="EditObjectBtn" Click="EditObjectBtn_Click" Style="{DynamicResource TableButtonStyle}" Width="120" Height="30" Margin="0 0 10 0" Content="Edit"/>
+                <Button x:Name="DiscardObjectBtn" Click="DiscardObjectBtn_Click" Style="{DynamicResource ButtonStyle}"  Width="120" Height="30" Content="Discard"/>
+            </StackPanel>
+
+        </Grid>
+    </Border>
+</Window>

@@ -92,6 +92,9 @@
     <Compile Include="View\ObjectAdd.xaml.cs">
       <DependentUpon>ObjectAdd.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\ObjectEdit.xaml.cs">
+      <DependentUpon>ObjectEdit.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\ObjectReview.xaml.cs">
       <DependentUpon>ObjectReview.xaml</DependentUpon>
     </Compile>
@@ -128,6 +131,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\ObjectAdd.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\ObjectEdit.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
