@@ -3,12 +3,16 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:fa5="http://schemas.fontawesome.com/icons/"
              xmlns:local="clr-namespace:Content_Management_System.UserControls"
              mc:Ignorable="d" 
              d:DesignHeight="30" d:DesignWidth="30"
              Width="Auto" Height="Auto">
     <Grid>
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0">
+            <Button x:Name="DarkModeBtn" Style="{DynamicResource WindowButtonStyle}" Click="DarkModeBtn_Click" Width="40" Height="30" FontFamily="Segoe MDL2 Assets" FontSize="12">
+                <fa5:SvgAwesome Icon="Regular_Sun" Foreground="{Binding Foreground, RelativeSource={RelativeSource AncestorType=Button}}" Width="20" Height="20"></fa5:SvgAwesome>
+            </Button>
             <Button x:Name="WindowMinimizeBtn" Style="{DynamicResource WindowButtonStyle}" Click="WindowMinimizeBtn_Click" Width="40" Height="30" FontFamily="Segoe MDL2 Assets" FontSize="12">
                 <TextBlock Text="&#xE921;"/>
             </Button>

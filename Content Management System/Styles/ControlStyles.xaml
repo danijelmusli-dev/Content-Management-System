@@ -230,7 +230,7 @@
     </Style>
 
     <Style x:Key="TableButtonStyle" TargetType="{x:Type Button}">
-        <Setter Property="FocusVisualStyle" Value="{StaticResource FocusVisual}"/>
+        <Setter Property="Background" Value="{DynamicResource Secondary1Color}"/>
         <Setter Property="Foreground" Value="{DynamicResource Primary0Color}"/>
         <Setter Property="BorderThickness" Value="1"/>
         <Setter Property="Padding" Value="1"/>
@@ -254,6 +254,7 @@
                         </Trigger>
                         <Trigger Property="IsPressed" Value="true">
                             <Setter Property="Background"  TargetName="border" Value="{DynamicResource Secondary2Color}"/>
+                            <Setter Property="BorderBrush"  TargetName="border" Value="{DynamicResource Secondary2Color}"/>
                             <Setter Property="Foreground"  Value="{DynamicResource Primary2Color}"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
@@ -265,7 +266,7 @@
 
     <Style x:Key="WindowButtonStyle" TargetType="{x:Type Button}">
         <Setter Property="BorderThickness" Value="1"/>
-        <Setter Property="Foreground" Value="White"/>
+        <Setter Property="Foreground" Value="{DynamicResource TextColorBrush}"/>
         <Setter Property="HorizontalContentAlignment" Value="Center"/>
         <Setter Property="VerticalContentAlignment" Value="Center"/>
         <Setter Property="Padding" Value="1"/>
@@ -459,7 +460,7 @@
                         <Trigger Property="IsChecked" Value="True">
                             <Setter TargetName="Border" Property="Background" Value="{DynamicResource Primary2Color}"/>
                             <Setter TargetName="Border" Property="BorderBrush" Value="{DynamicResource Primary2Color}"/>
-                            <Setter Property="Foreground" Value="White"/>
+                            <Setter Property="Foreground" Value="{DynamicResource TextColorBrush}"/>
                         </Trigger>
                         <Trigger Property="IsMouseOver" Value="True">
                             <Setter TargetName="Border" Property="Background" Value="{DynamicResource Primary1Color}"/>

@@ -1,10 +1,34 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Reviews>
   <Review>
+    <MovieName>Trip</MovieName>
+    <Rating>2.5</Rating>
+    <Link>adasdasdasdasdasd</Link>
+    <DescriptionPath>C:\Users\Danijel Musli\Desktop\INDIVIDUAL PROJECTS\Content Management System\Content Management System\Data\ObjectData\RtfFiles\Trip.rtf</DescriptionPath>
+    <ImagePath>C:\Users\Danijel Musli\Desktop\opasne slike\zajebancija\ColorDiagram.jpg</ImagePath>
+    <ObjectCreationTime>2026-04-16T14:57:23.7993085+02:00</ObjectCreationTime>
+  </Review>
+  <Review>
+    <MovieName>Svadba</MovieName>
+    <Rating>0.5</Rating>
+    <Link>sdadasdd</Link>
+    <DescriptionPath>C:\Users\Danijel Musli\Desktop\INDIVIDUAL PROJECTS\Content Management System\Content Management System\Data\ObjectData\RtfFiles\Svadba.rtf</DescriptionPath>
+    <ImagePath>C:\Users\Danijel Musli\Desktop\opasne slike\zajebancija\pirpsus.png</ImagePath>
+    <ObjectCreationTime>2026-04-16T14:56:02.9507677+02:00</ObjectCreationTime>
+  </Review>
+  <Review>
+    <MovieName>Cigani</MovieName>
+    <Rating>5</Rating>
+    <Link>asdasdasdadad</Link>
+    <DescriptionPath>C:\Users\Danijel Musli\Desktop\INDIVIDUAL PROJECTS\Content Management System\Content Management System\Data\ObjectData\RtfFiles\Cigani.rtf</DescriptionPath>
+    <ImagePath>C:\Users\Danijel Musli\Desktop\opasne slike\zajebancija\C2Sc_XvXUAABxDS.png</ImagePath>
+    <ObjectCreationTime>2026-04-16T14:48:08.7030185+02:00</ObjectCreationTime>
+  </Review>
+  <Review>
     <MovieName>The Shawshank Redemption</MovieName>
     <Rating>4.5</Rating>
     <Link>https://en.wikipedia.org/wiki/The_Shawshank_Redemption</Link>
-    <DescriptionPath>Object1.rtf</DescriptionPath>
+    <DescriptionPath>C:\Users\Danijel Musli\Desktop\INDIVIDUAL PROJECTS\Content Management System\Content Management System\Data\ObjectData\RtfFiles\Object1.rtf</DescriptionPath>
     <ImagePath>/Media/MovieImages/pic1.jpg</ImagePath>
     <ObjectCreationTime>2026-04-14T20:47:58.8775265+02:00</ObjectCreationTime>
   </Review>
@@ -12,7 +36,7 @@
     <MovieName>The Godfather</MovieName>
     <Rating>5</Rating>
     <Link>https://en.wikipedia.org/wiki/The_Godfather</Link>
-    <DescriptionPath>Object2.rtf</DescriptionPath>
+    <DescriptionPath>C:\Users\Danijel Musli\Desktop\INDIVIDUAL PROJECTS\Content Management System\Content Management System\Data\ObjectData\RtfFiles\Object2.rtf</DescriptionPath>
     <ImagePath>/Media/MovieImages/pic2.jpg</ImagePath>
     <ObjectCreationTime>2026-04-14T20:47:58.8775265+02:00</ObjectCreationTime>
   </Review>
@@ -20,7 +44,7 @@
     <MovieName>The Dark Knight</MovieName>
     <Rating>2.5</Rating>
     <Link>https://en.wikipedia.org/wiki/The_Dark_Knight_(film)</Link>
-    <DescriptionPath>Object3.rtf</DescriptionPath>
+    <DescriptionPath>C:\Users\Danijel Musli\Desktop\INDIVIDUAL PROJECTS\Content Management System\Content Management System\Data\ObjectData\RtfFiles\Object3.rtf</DescriptionPath>
     <ImagePath>/Media/MovieImages/pic3.jpg</ImagePath>
     <ObjectCreationTime>2026-04-14T20:47:58.8775265+02:00</ObjectCreationTime>
   </Review>
@@ -28,7 +52,7 @@
     <MovieName>Inception</MovieName>
     <Rating>4</Rating>
     <Link>https://en.wikipedia.org/wiki/Inception</Link>
-    <DescriptionPath>Object4.rtf</DescriptionPath>
+    <DescriptionPath>C:\Users\Danijel Musli\Desktop\INDIVIDUAL PROJECTS\Content Management System\Content Management System\Data\ObjectData\RtfFiles\Object4.rtf</DescriptionPath>
     <ImagePath>/Media/MovieImages/pic4.jpg</ImagePath>
     <ObjectCreationTime>2026-04-14T20:47:58.8775265+02:00</ObjectCreationTime>
   </Review>
@@ -36,7 +60,7 @@
     <MovieName>Pulp Fiction</MovieName>
     <Rating>3.5</Rating>
     <Link>https://en.wikipedia.org/wiki/Pulp_Fiction</Link>
-    <DescriptionPath>Object5.rtf</DescriptionPath>
+    <DescriptionPath>C:\Users\Danijel Musli\Desktop\INDIVIDUAL PROJECTS\Content Management System\Content Management System\Data\ObjectData\RtfFiles\Object5.rtf</DescriptionPath>
     <ImagePath>/Media/MovieImages/pic5.jpg</ImagePath>
     <ObjectCreationTime>2026-04-14T20:47:58.8775265+02:00</ObjectCreationTime>
   </Review>

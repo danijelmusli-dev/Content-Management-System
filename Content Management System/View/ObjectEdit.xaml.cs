@@ -212,37 +212,39 @@ namespace Content_Management_System.View
         {
             if (this.ValidateInput())
             {
-
-                var source = this.ObjectImage.Source as BitmapSource;
-                if (source is BitmapImage bmp)
+                try
                 {
-                    // Ako je BitmapImage, ima UriSource
-                    if (EditReview.ImagePath != bmp.UriSource.AbsolutePath)
+                    var source = this.ObjectImage.Source as BitmapSource;
+                    if (source is BitmapImage bmp)
                     {
-                        EditReview.ImagePath = bmp.UriSource.LocalPath;
+                        if (EditReview.ImagePath != bmp.UriSource.AbsolutePath)
+                        {
+                            EditReview.ImagePath = bmp.UriSource.LocalPath;
+                        }
                     }
+
+                    EditReview.MovieName = this.ObjectNameTb.Text;
+                    EditReview.Link = this.ObjectLinkTb.Text;
+
+                    string path = this.EditReview.DescriptionPath;
+
+                    using (FileStream fs = new FileStream(path, FileMode.Create))
+                    {
+                        TextRange textRange = new TextRange(this.DescriptionRichTextBox.Document.ContentStart, this.DescriptionRichTextBox.Document.ContentEnd);
+                        textRange.Save(fs, DataFormats.Rtf);
+                    }
+                    //EditReview.ObjectCreationTime = DateTime.Now;
+
+                    this.DialogResult = true;
+                    this.Close();
                 }
-                else
+                catch
                 {
-                    // Ako je BitmapFrameDecode, nema UriSource
-                    // moraš da pamtiš putanju ručno kada učitavaš sliku
+                    MessageWindow messageWindow = new MessageWindow("Error while editing", EFontAwesomeIcon.Solid_SadTear, MessageWindow.MessageBoxCause.Info);
+                    messageWindow.ShowDialog();
+                    this.DialogResult = false;
+                    this.Close();
                 }
-
-                EditReview.MovieName = this.ObjectNameTb.Text;
-                EditReview.Link = this.ObjectLinkTb.Text;
-
-                string path = EditReview.DescriptionPath;
-
-                using (FileStream fs = new FileStream(path, FileMode.Open))
-                {
-                    TextRange textRange = new TextRange(this.DescriptionRichTextBox.Document.ContentStart, this.DescriptionRichTextBox.Document.ContentEnd);
-                    textRange.Save(fs, DataFormats.Rtf);
-                }
-                EditReview.DescriptionPath = path;
-                //EditReview.ObjectCreationTime = DateTime.Now;
-
-                this.DialogResult = true;
-                this.Close();
             }
         }
 
@@ -327,7 +329,12 @@ namespace Content_Management_System.View
                 result = false;
             }
 
-            return result;
+            if(!result)
+                return false;
+
+            MessageWindow messageWindow = new MessageWindow("Do you want to edit this Review?", EFontAwesomeIcon.Solid_Edit, MessageWindow.MessageBoxCause.YesNo);
+            return (messageWindow.ShowDialog() == true);
+            
         }
 
     }

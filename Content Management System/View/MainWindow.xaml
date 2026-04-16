@@ -13,8 +13,11 @@
         WindowStyle="None"
         
         Closing="Window_Closing"
+        Closed="Window_Closed"
         
-        Title="MainWindow" Height="800" Width="1300">
+        Title="MainWindow" 
+        Height="800" Width="1300"
+        MinHeight="400" MinWidth="600">
     <Border x:Name="GridBorder" Style="{StaticResource BorderedGridStyle}">
         <Grid Style="{DynamicResource GridStyle}">
 
@@ -26,7 +29,7 @@
                 <RowDefinition Height="0.2*"/>
             </Grid.RowDefinitions>
 
-            <uc:WindowHeader Grid.Row="0" Grid.ColumnSpan="2" MinimizedButton="True" MaximizedButton="True" CloseButton="True"/>
+            <uc:WindowHeader Grid.Row="0" Grid.ColumnSpan="2" DarkModeButton="True" MinimizedButton="True" MaximizedButton="True" CloseButton="True"/>
 
             <StackPanel x:Name="HeaderStackPanel" Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
                 <fa5:SvgAwesome Icon="Solid_Film" Foreground="{DynamicResource Secondary0Color}" Width="48" Height="48" Margin="0 0 8 0"/>
@@ -51,11 +54,11 @@
             </ScrollViewer>
 
             <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Center" Margin="10">
-                <Button x:Name="AddReviewBtn" Style="{DynamicResource TableButtonStyle}" Click="AddReviewBtn_Click" Content="Add" Width="100" Height="30" HorizontalAlignment="Right" FontSize="15" Margin="10 0 0 0"/>
-                <Button x:Name="DeleteReviewBtn" Style="{DynamicResource TableButtonStyle}" Click="DeleteReviewBtn_Click" Content="Delete" Width="100" Height="30" HorizontalAlignment="Right" FontSize="15" Margin="10 0 0 0"/>
+                <Button x:Name="AddReviewBtn" Style="{DynamicResource TableButtonStyle}" Click="AddReviewBtn_Click" Loaded="AddReviewBtn_Loaded" Content="Add" Width="100" Height="30" HorizontalAlignment="Right" FontSize="15" Margin="10 0 0 0"/>
+                <Button x:Name="DeleteReviewBtn" Style="{DynamicResource TableButtonStyle}" Click="DeleteReviewBtn_Click" Loaded="DeleteReviewBtn_Loaded" Content="Delete" Width="100" Height="30" HorizontalAlignment="Right" FontSize="15" Margin="10 0 0 0"/>
             </StackPanel>
 
-            <CheckBox x:Name="CheckAllCb" Grid.Row="3" Checked="CheckAllCb_Checked" Unchecked="CheckAllCb_Checked" Style="{DynamicResource CheckBoxStyle}" Content="Select All" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" HorizontalAlignment="Right" Margin="0 0 20 0">
+            <CheckBox x:Name="CheckAllCb" Grid.Row="3" Checked="CheckAllCb_Checked" Unchecked="CheckAllCb_Checked" Loaded="CheckAllCb_Loaded" Style="{DynamicResource CheckBoxStyle}" Content="Select All" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" HorizontalAlignment="Right" Margin="0 0 20 0">
                 <CheckBox.LayoutTransform>
                     <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
                 </CheckBox.LayoutTransform>

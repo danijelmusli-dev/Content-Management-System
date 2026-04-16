@@ -3,7 +3,7 @@ using System.ComponentModel;
 
 namespace Content_Management_System.Models
 {
-    public class Review
+    public class Review : INotifyPropertyChanged
     {
         private string _imagePath;
         private string _movieName;
@@ -52,7 +52,14 @@ namespace Content_Management_System.Models
         public bool IsSelected
         {
             get => _isSelected;
-            set => _isSelected = value;
+            set
+            {
+                if (_isSelected != value)
+                {
+                    _isSelected = value;
+                    OnPropertyChanged(nameof(IsSelected));
+                }
+            }
         }
 
         public Review() { }
@@ -85,6 +92,12 @@ namespace Content_Management_System.Models
         {
             return new Review(this);
         }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        protected void OnPropertyChanged(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
     }
 }
-

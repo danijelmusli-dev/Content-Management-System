@@ -49,6 +49,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>icon-icons-_1_.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="FontAwesome5, Version=2.1.11.0, Culture=neutral, PublicKeyToken=9cfaf01297a008f8, processorArchitecture=MSIL">
       <HintPath>..\packages\FontAwesome5.2.1.11\lib\net472\FontAwesome5.dll</HintPath>
@@ -89,6 +92,9 @@
     <Compile Include="View\Login.xaml.cs">
       <DependentUpon>Login.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\MessageWindow.xaml.cs">
+      <DependentUpon>MessageWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\ObjectAdd.xaml.cs">
       <DependentUpon>ObjectAdd.xaml</DependentUpon>
     </Compile>
@@ -98,7 +104,7 @@
     <Compile Include="View\ObjectReview.xaml.cs">
       <DependentUpon>ObjectReview.xaml</DependentUpon>
     </Compile>
-    <Page Include="MainWindow.xaml">
+    <Page Include="View\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -106,11 +112,15 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="MainWindow.xaml.cs">
+    <Compile Include="View\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
     <Page Include="Styles\BaseColorsDarkTheme.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Styles\BaseColorsLightTheme.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -127,6 +137,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\Login.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\MessageWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -198,7 +212,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Data\UserData\UserImages\" />
-    <Folder Include="Media\Icons\" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Media\MovieImages\pic1.jpg" />
@@ -206,6 +219,15 @@
     <Resource Include="Media\MovieImages\pic3.jpg" />
     <Resource Include="Media\MovieImages\pic4.jpg" />
     <Resource Include="Media\MovieImages\pic5.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Media\Icons\icon-icons.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Media\Icons\icon-icons-_1_.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="icon-icons-_1_.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
