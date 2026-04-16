@@ -30,7 +30,7 @@
                 <RowDefinition Height="1*"/>
             </Grid.RowDefinitions>
 
-            <uc:WindowHeader Grid.Row="0" Grid.ColumnSpan="2" MinimizedButton="True" MaximizedButton="False" CloseButton="True"/>
+            <uc:WindowHeader Grid.Row="0" Grid.ColumnSpan="2" DarkModeButton="True" MinimizedButton="True" MaximizedButton="False" CloseButton="True"/>
 
             <StackPanel x:Name="HeaderStackPanel" Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="30 0 0 0">
                 <fa5:SvgAwesome Icon="Solid_Edit" Foreground="{DynamicResource Secondary0Color}" Width="48" Height="48" Margin="0 0 8 0"/>

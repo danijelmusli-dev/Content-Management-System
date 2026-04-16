@@ -1,5 +1,7 @@
 ﻿using Content_Management_System.Models;
 using Content_Management_System.UserControls;
+using Content_Management_System.View;
+using FontAwesome5;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -26,24 +28,15 @@ namespace Content_Management_System
         private bool IsReviewsChanged { get; set; } = false;
         public ObservableCollection<Review> Reviews { get; set; } = new ObservableCollection<Review>();
 
-        public MainWindow()
+        public MainWindow(User user)
         {
             InitializeComponent();
 
             this.DataContext = this;
-
             this.Reviews = new ObservableCollection<Review>(LoadObjects());
 
-            this.Visibility = Visibility.Hidden;
-
-            var loginWindow = new View.Login();
-            bool? someoneLogged = loginWindow.ShowDialog();
-
-            if (someoneLogged == true)
-            {
-                this.CurrentUser = loginWindow.User;
-                this.IsAdminLogged = (this.CurrentUser.Role == UserRole.Role.Admin);
-            }
+            this.CurrentUser = user;
+            this.IsAdminLogged = (this.CurrentUser.Role == UserRole.Role.Admin);
 
         }
 
@@ -101,41 +94,58 @@ namespace Content_Management_System
 
                 this.IsReviewsChanged = true;
             }
-        
+
+        }
+        private void AddReviewBtn_Loaded(object sender, RoutedEventArgs e)
+        {
+            this.AddReviewBtn.Visibility = (IsAdminLogged) ? Visibility.Visible: Visibility.Collapsed;
         }
 
         private void DeleteReviewBtn_Click(object sender, RoutedEventArgs e)
         {
             List<Review> selected = Reviews.Where(x => x.IsSelected).ToList();
 
+            if (selected.Count == 0)
+                return;
+
+            MessageWindow messageWindow = new MessageWindow($"Do you want to delete {selected.Count} Reviews?", EFontAwesomeIcon.Solid_Eraser, MessageWindow.MessageBoxCause.YesNo);
+            if (messageWindow.ShowDialog() == false)
+                return;
+
             int itemStartCount = this.Reviews.Count;
 
-            foreach (Review review in selected)
+            try
             {
-                string relativePath = review.DescriptionPath;
-                string path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\..\Data\ObjectData\RtfFiles", relativePath);
-                path = Path.GetFullPath(path);
-
-                if (File.Exists(path))
+                foreach (Review review in selected)
                 {
-                    try
+                    string relativePath = review.DescriptionPath;
+                    string path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\..\Data\ObjectData\RtfFiles", relativePath);
+                    path = Path.GetFullPath(path);
+
+                    if (File.Exists(path))
                     {
-                        File.Delete(path);
+                        try
+                        {
+                            File.Delete(path);
+                        }
+                        catch (Exception re)
+                        {
+                            MessageBox.Show(re.Message);
+                        }
                     }
-                    catch (Exception re)
-                    {
-                        MessageBox.Show(re.Message);
-                    }
+
+                    Reviews.Remove(review);
                 }
 
-                Reviews.Remove(review);
+                if (itemStartCount != this.Reviews.Count)
+                {
+                    this.IsReviewsChanged = true;
+                }
             }
-
-            if (itemStartCount != this.Reviews.Count) 
+            catch 
             {
-                this.IsReviewsChanged = true;
+                messageWindow = new MessageWindow($"Error while deleting", EFontAwesomeIcon.Solid_SadTear, MessageWindow.MessageBoxCause.Info);
             }
-
         }
 
         private void CheckAllCb_Checked(object sender, RoutedEventArgs e)
@@ -147,6 +157,15 @@ namespace Content_Management_System
                 review.IsSelected = checkState;
             }
 
+        }
+        private void CheckAllCb_Loaded(object sender, RoutedEventArgs e)
+        {
+            this.CheckAllCb.Visibility = (this.IsAdminLogged) ? Visibility.Visible : Visibility.Collapsed;
+        }
+
+        private void DeleteReviewBtn_Loaded(object sender, RoutedEventArgs e)
+        {
+            this.DeleteReviewBtn.Visibility = (IsAdminLogged) ? Visibility.Visible : Visibility.Collapsed;
         }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
@@ -173,6 +192,10 @@ namespace Content_Management_System
                     }
                 }
             }
+        }
+
+        private void Window_Closed(object sender, EventArgs e)
+        {
         }
     }
 }

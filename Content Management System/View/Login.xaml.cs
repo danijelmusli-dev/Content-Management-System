@@ -13,7 +13,7 @@ namespace Content_Management_System.View
         private List<User> users = new List<User>();
         private bool isAuthenticated = false;
 
-        public User User { get; private set; }
+        private User User { get; set; }
 
         public Login()
         {
@@ -26,7 +26,12 @@ namespace Content_Management_System.View
         private void Window_Closed(object sender, EventArgs e)
         {
             if (!isAuthenticated)
-                Application.Current.MainWindow.Close();
+            {
+                if (Application.Current.MainWindow != null)
+                {
+                    Application.Current.MainWindow.Close();
+                }
+            }
         }
 
         private List<User> LoadUsers()
@@ -58,12 +63,14 @@ namespace Content_Management_System.View
 
             if (isAuthenticated)
             {
+                this.Visibility = Visibility.Hidden;
 
                 this.User = users.Find(user => user.Name == username);
-                this.DialogResult = true;
+                MainWindow mainWindow = new MainWindow(this.User);
+                mainWindow.ShowDialog();
 
-                this.Close();
-                Application.Current.MainWindow.Visibility = Visibility.Visible;
+                this.ClearTextBoxes();
+                this.Visibility = Visibility.Visible;
             }
 
         }
@@ -92,5 +99,14 @@ namespace Content_Management_System.View
                 this.PasswordTB.Focus();
             }
         }
+
+        private void ClearTextBoxes()
+        {
+            this.UserNameTB.Text = string.Empty;
+            this.PasswordTB.Text = string.Empty;
+
+            this.LoginMessageTbl.Text = string.Empty;
+        }
+
     }
 }

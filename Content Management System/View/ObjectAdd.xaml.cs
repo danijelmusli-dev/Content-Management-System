@@ -185,23 +185,33 @@ namespace Content_Management_System.View
         {
             if(this.ValidateInput())
             {
-                NewReview.ImagePath = ((BitmapImage)this.ObjectImage.Source).UriSource.LocalPath;
-                NewReview.MovieName = this.ObjectNameTb.Text;
-                NewReview.Link = this.ObjectLinkTb.Text;
-                
-                string path = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\..\Data\ObjectData\RtfFiles", $"{NewReview.MovieName}.rtf");
-                path = System.IO.Path.GetFullPath(path);
-
-                using (FileStream fs = new FileStream(path, FileMode.OpenOrCreate))
+                try
                 {
-                    TextRange textRange = new TextRange(this.DescriptionRichTextBox.Document.ContentStart, this.DescriptionRichTextBox.Document.ContentEnd);
-                    textRange.Save(fs, DataFormats.Rtf);
-                }
-                NewReview.DescriptionPath = path;
-                NewReview.ObjectCreationTime = DateTime.Now;
+                    NewReview.ImagePath = ((BitmapImage)this.ObjectImage.Source).UriSource.LocalPath;
+                    NewReview.MovieName = this.ObjectNameTb.Text;
+                    NewReview.Link = this.ObjectLinkTb.Text;
 
-                this.DialogResult = true;
-                this.Close();
+                    string path = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\..\Data\ObjectData\RtfFiles", $"{NewReview.MovieName}.rtf");
+                    path = System.IO.Path.GetFullPath(path);
+
+                    using (FileStream fs = new FileStream(path, FileMode.OpenOrCreate))
+                    {
+                        TextRange textRange = new TextRange(this.DescriptionRichTextBox.Document.ContentStart, this.DescriptionRichTextBox.Document.ContentEnd);
+                        textRange.Save(fs, DataFormats.Rtf);
+                    }
+                    NewReview.DescriptionPath = path;
+                    NewReview.ObjectCreationTime = DateTime.Now;
+
+                    this.DialogResult = true;
+                    this.Close();
+                }
+                catch
+                {
+                    MessageWindow messageWindow = new MessageWindow("Error while adding", EFontAwesomeIcon.Solid_SadTear, MessageWindow.MessageBoxCause.Info);
+                    messageWindow.ShowDialog();
+                    this.DialogResult = false;
+                    this.Close();
+                }
             }
         }
 
@@ -269,7 +279,11 @@ namespace Content_Management_System.View
                 result = false;
             }
 
-            return result;
+            if (!result)
+                return false;
+
+            MessageWindow messageWindow = new MessageWindow("Do you want to add new Review?", EFontAwesomeIcon.Solid_Question, MessageWindow.MessageBoxCause.YesNo);
+            return (messageWindow.ShowDialog() == true);
         }
 
     }

@@ -43,7 +43,7 @@
                 </Path.Data>
             </Path>
 
-            <uc:WindowHeader Canvas.Right="0" Canvas.Top="0" MinimizedButton="True" MaximizedButton="False" CloseButton="True"/>
+            <uc:WindowHeader Canvas.Right="0" Canvas.Top="0" DarkModeButton="True" MinimizedButton="True" MaximizedButton="False" CloseButton="True"/>
 
             <Image x:Name="MoviePosterIMG" Source="{Binding ImagePath}" Stretch="UniformToFill"
                    Canvas.Left="150" Canvas.Top="60" Width="300" Height="400"/>

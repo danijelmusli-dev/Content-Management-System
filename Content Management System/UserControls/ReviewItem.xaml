@@ -14,10 +14,10 @@
 
         <Grid.Background>
             <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
-                <GradientStop Color="{Binding Source={StaticResource Primary0Color},   Path=Color}" Offset="0.1"/>
-                <GradientStop Color="{Binding Source={StaticResource Primary1Color},   Path=Color}" Offset="0.4"/>
-                <GradientStop Color="{Binding Source={StaticResource Primary2Color},   Path=Color}" Offset="2.6"/>
-                <GradientStop Color="{Binding Source={StaticResource Secondary0Color}, Path=Color}" Offset="1.8"/>
+                <GradientStop Color="{DynamicResource Primary0GradientColor}"   Offset="0.1"/>
+                <GradientStop Color="{DynamicResource Primary1GradientColor}"   Offset="0.4"/>
+                <GradientStop Color="{DynamicResource Primary2GradientColor}"   Offset="2.6"/>
+                <GradientStop Color="{DynamicResource Secondary0GradientColor}" Offset="1.8"/>
             </LinearGradientBrush>
         </Grid.Background>
         
@@ -49,7 +49,7 @@
         </StackPanel>
 
         <RichTextBox x:Name="ReviewDescriptionRtb" Style="{DynamicResource RichTextBoxStyle}" Loaded="ReviewDescriptionRtb_Loaded" IsReadOnly="True" BorderBrush="Transparent" Background="Transparent" Grid.Row="3" HorizontalContentAlignment="Left" Margin="10"/>
-        <CheckBox x:Name="ReviewCheckBox" Style="{DynamicResource CheckBoxStyle}" Grid.Row="4" IsChecked="{Binding IsSelected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5">
+        <CheckBox x:Name="ReviewCheckBox" Style="{DynamicResource CheckBoxStyle}" Grid.Row="4" IsChecked="{Binding IsSelected, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5">
             <CheckBox.LayoutTransform>
                 <ScaleTransform ScaleX="1.8" ScaleY="1.8"/>
             </CheckBox.LayoutTransform>

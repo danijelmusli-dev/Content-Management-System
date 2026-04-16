@@ -1,4 +1,8 @@
-﻿using System.Windows;
+﻿using FontAwesome5;
+using System;
+using System.Linq;
+using System.Security.Policy;
+using System.Windows;
 using System.Windows.Controls;
 
 namespace Content_Management_System.UserControls
@@ -16,6 +20,10 @@ namespace Content_Management_System.UserControls
 
         public static readonly DependencyProperty CloseButtonProperty =
             DependencyProperty.Register(nameof(CloseButton), typeof(bool), typeof(WindowHeader),
+                new PropertyMetadata(true, OnButtonVisibilityChanged));
+
+        public static readonly DependencyProperty DarkModeButtonProperty =
+            DependencyProperty.Register(nameof(DarkModeButton), typeof(bool), typeof(WindowHeader),
                 new PropertyMetadata(true, OnButtonVisibilityChanged));
 
         public bool MinimizedButton
@@ -36,6 +44,12 @@ namespace Content_Management_System.UserControls
             set => SetValue(CloseButtonProperty, value);
         }
 
+        public bool DarkModeButton
+        {
+            get => (bool)GetValue(DarkModeButtonProperty);
+            set => SetValue(DarkModeButtonProperty, value);
+        }
+
         private static void OnButtonVisibilityChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             var control = (WindowHeader)d;
@@ -47,13 +61,19 @@ namespace Content_Management_System.UserControls
             WindowMinimizeBtn.Visibility = MinimizedButton ? Visibility.Visible : Visibility.Collapsed;
             WindowMaximizeBtn.Visibility = MaximizedButton ? Visibility.Visible : Visibility.Collapsed;
             WindowCloseBtn.Visibility = CloseButton ? Visibility.Visible : Visibility.Collapsed;
+            DarkModeBtn.Visibility = DarkModeButton ? Visibility.Visible : Visibility.Collapsed;
         }
-
 
         public WindowHeader()
         {
             this.InitializeComponent();
             UpdateVisibility();
+
+            bool isDarkMode = (bool)Application.Current.Resources["IsDarkMode"];
+            if (this.DarkModeBtn.Content is SvgAwesome icon)
+            {
+                icon.Icon = (isDarkMode) ? EFontAwesomeIcon.Regular_Sun : EFontAwesomeIcon.Regular_Moon;
+            }
         }
 
         private void WindowCloseBtn_Click(object sender, RoutedEventArgs e)
@@ -79,5 +99,33 @@ namespace Content_Management_System.UserControls
                 parentWindow.WindowState = WindowState.Minimized;
             }
         }
+
+        private void DarkModeBtn_Click(object sender, RoutedEventArgs e)
+        {
+            if (this.DarkModeBtn.Content is SvgAwesome icon)
+            {
+                bool isDarkMode = (bool)Application.Current.Resources["IsDarkMode"];
+
+                string currentMode = (isDarkMode)  ? "Dark" : "Light";
+                string nextMode    = (!isDarkMode) ? "Dark" : "Light";
+                icon.Icon = (!isDarkMode) ? EFontAwesomeIcon.Regular_Sun : EFontAwesomeIcon.Regular_Moon;
+
+                var dictionaries = Application.Current.Resources.MergedDictionaries;
+                var currentResource = dictionaries.FirstOrDefault(x => x.Source != null && x.Source.OriginalString.Contains(currentMode));
+
+                if (currentResource != null)
+                {
+                    dictionaries.Remove(currentResource);
+
+                    ResourceDictionary nextResource = new ResourceDictionary();
+                    nextResource.Source = new Uri($"Styles/BaseColors{nextMode}Theme.xaml", UriKind.Relative);
+
+                    dictionaries.Add(nextResource);
+                    Application.Current.Resources["IsDarkMode"] = !isDarkMode;
+                }
+            }
+        }
+
+
     }
 }
