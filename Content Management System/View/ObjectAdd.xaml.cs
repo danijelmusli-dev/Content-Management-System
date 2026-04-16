@@ -176,6 +176,15 @@ namespace Content_Management_System.View
                 }
             }
         }
+        private void CountWordBtn_Click(object sender, RoutedEventArgs e)
+        {
+            TextRange textRange = new TextRange(this.DescriptionRichTextBox.Document.ContentStart, this.DescriptionRichTextBox.Document.ContentEnd);
+            int wordCount = textRange.Text
+            .Split((char[])null, StringSplitOptions.RemoveEmptyEntries).Length;
+
+            MessageWindow messageWindow = new MessageWindow($"Word Count: {wordCount}", EFontAwesomeIcon.Regular_FileWord, MessageWindow.MessageBoxCause.Info);
+            messageWindow.ShowDialog();
+        }
 
         private void DiscardObjectBtn_Click(object sender, RoutedEventArgs e)
         {

@@ -12,7 +12,7 @@
         WindowStartupLocation="CenterScreen"
         WindowStyle="None"
         
-        Height="650" Width="900">
+        Height="650" Width="950">
     <Border Style="{DynamicResource BorderedGridStyle}">
         <Grid Style="{DynamicResource GridStyle}">
 
@@ -127,6 +127,9 @@
                         <fa5:SvgAwesome Icon="Regular_FileAlt" Foreground="{Binding Foreground, RelativeSource={RelativeSource AncestorType=Button}}" Width="20" Height="20"/>
                     </Button>
 
+                    <Button x:Name="CountWordBtn" Click="CountWordBtn_Click" Style="{DynamicResource WindowButtonStyle}" HorizontalContentAlignment="Center" Margin="0 0 5 0">
+                        <fa5:SvgAwesome Icon="Regular_FileWord" Foreground="{Binding Foreground, RelativeSource={RelativeSource AncestorType=Button}}" Width="20" Height="20"/>
+                    </Button>
                 </ToolBar>
 
                 <RichTextBox x:Name="DescriptionRichTextBox" Style="{DynamicResource RichTextBoxStyle}" Loaded="DescriptionRichTextBox_Loaded"  SelectionChanged="DescriptionRichTextBox_SelectionChanged" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" FontSize="16" Margin="10 0 10 0"/>
