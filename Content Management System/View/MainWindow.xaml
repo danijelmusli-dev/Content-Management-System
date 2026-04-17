@@ -49,7 +49,6 @@
                             <uc:ReviewItem ReviewEdited="ReviewItem_ReviewEdited" EditButtonEnabled="{Binding DataContext.IsAdminLogged, RelativeSource={RelativeSource AncestorType=Window}}"/>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
-
                 </ItemsControl>
             </ScrollViewer>
 

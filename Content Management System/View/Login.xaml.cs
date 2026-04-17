@@ -59,7 +59,13 @@ namespace Content_Management_System.View
 
             isAuthenticated = users.Any(user => user.Name == username && user.Password == password);
 
-            this.LoginMessageTbl.Visibility = (!isAuthenticated) ? Visibility.Visible : Visibility.Hidden;
+            bool isValidUsername = users.Any(user => user.Name == username);
+            bool isValidPassword = users.Any(user => user.Password == password);
+
+            //this.LoginMessageTbl.Visibility = (!isAuthenticated) ? Visibility.Visible : Visibility.Hidden;
+            this.UserNameTbl.Visibility = (!isValidUsername) ? Visibility.Visible : Visibility.Hidden;
+            this.PasswordTbl.Visibility = (!isValidPassword) ? Visibility.Visible : Visibility.Hidden;
+
 
             if (isAuthenticated)
             {
